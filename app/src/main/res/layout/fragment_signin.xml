@@ -36,6 +36,7 @@
         android:orientation="vertical">
 
         <EditText
+            android:id="@+id/login_input_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -56,6 +57,7 @@
             android:background="#999999" />
 
         <EditText
+            android:id="@+id/login_input_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -81,6 +83,7 @@
             android:layout_marginTop="10dp">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btn_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

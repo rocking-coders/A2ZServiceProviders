@@ -34,6 +34,7 @@
         android:orientation="vertical">
 
         <EditText
+            android:id="@+id/signup_input_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -54,6 +55,7 @@
             android:background="#B1B1B1" />
 
         <EditText
+            android:id="@+id/signup_input_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -74,6 +76,7 @@
             android:background="#B1B1B1" />
 
         <EditText
+            android:id="@+id/signup_input_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -99,6 +102,7 @@
             android:layout_marginTop="10dp">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btn_signup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

@@ -50,6 +50,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             {
                 //DatabaseReference mRef = database.getReference("Name");
                 //mRef.setValue("Deepak");
+
             }
         }
     }
