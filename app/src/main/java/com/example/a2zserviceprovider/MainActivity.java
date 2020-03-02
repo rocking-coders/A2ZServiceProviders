@@ -7,13 +7,18 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -21,7 +26,7 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     private NavigationView navigationView;
-
+    private View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,20 +34,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
 
+        //receiving intent
+        Intent i=getIntent();
+
         drawer = findViewById(R.id.drawer_layout1);
         navigationView = findViewById(R.id.nav_view1);
         navigationView.setNavigationItemSelectedListener(this);
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        Log.d("status","Not logged in");
+
+        //changing Navigation buttons and updating name of user
+        SharedPreferences sharedPreferences = getSharedPreferences("Login Data", Context.MODE_PRIVATE);
+        String username = sharedPreferences.getString("username","");
+        Log.d("Username",username);
+        if(!username.equals("")){
+            Log.d("status","Logged In");
+            Menu menu = navigationView.getMenu();
+            menu.findItem(R.id.nav_signIn).setVisible(false);
+            menu.findItem(R.id.nav_signUp).setVisible(false);
+            view = navigationView.getHeaderView(0);
+            TextView textView = view.findViewById(R.id.username);
+            textView.setText(username);
+        }
 
         if (savedInstanceState == null) {
-            //first fragment to be opened - homeFragment along with highlighted
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container1, new HomeFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_home);
-        }
+                //first fragment to be opened - homeFragment along with highlighted
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container1, new HomeFragment()).commit();
+                navigationView.setCheckedItem(R.id.nav_home);
+            }
     }
 
     @Override

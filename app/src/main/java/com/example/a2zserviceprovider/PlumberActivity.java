@@ -7,20 +7,25 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
 public class PlumberActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
-
+    private View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +48,20 @@ public class PlumberActivity extends AppCompatActivity implements NavigationView
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        //changing Navigation buttons
+        SharedPreferences sharedPreferences = getSharedPreferences("Login Data", Context.MODE_PRIVATE);
+        String username = sharedPreferences.getString("username","");
+        Log.d("Username",username);
+        if(!username.equals("")){
+            Log.d("status","Logged In");
+            Menu menu = navigationView.getMenu();
+            menu.findItem(R.id.nav_signIn).setVisible(false);
+            menu.findItem(R.id.nav_signUp).setVisible(false);
+            view = navigationView.getHeaderView(0);
+            TextView textView = view.findViewById(R.id.username);
+            textView.setText(username);
+        }
 
         if (savedInstanceState == null) {
             //first fragment to be opened - homeFragment along with highlighted

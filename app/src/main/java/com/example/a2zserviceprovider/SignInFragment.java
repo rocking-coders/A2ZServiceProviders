@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -148,12 +150,14 @@ public class SignInFragment extends Fragment {
             //else aVoid = username
             else
             {
-                /*
-                Log.d("UserName",aVoid);
+                Log.d("UserName",aVoid+" Signed In");
+                SharedPreferences preferences = getActivity().getSharedPreferences("Login Data",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("username",aVoid);
+                editor.commit();
                 Intent i = new Intent(ctx,MainActivity.class);
-                i.putExtra("SignedIn",aVoid);
                 startActivity(i);
-                */
+                getActivity().finish();
                  //write here the code to be executed after successful sign In
             }
         }
