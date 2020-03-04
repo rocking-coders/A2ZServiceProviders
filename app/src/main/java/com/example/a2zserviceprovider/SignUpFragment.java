@@ -120,7 +120,7 @@ public class SignUpFragment extends Fragment {
             alertDialog.setTitle("Registration Status");
             progressDialog = new ProgressDialog(ctx);
             progressDialog.setCancelable(false);
-            progressDialog.setMessage("Logging you in...");
+            progressDialog.setMessage("Processing...");
             showDialog();
         }
 

@@ -63,7 +63,7 @@ public class AuthenActivity extends AppCompatActivity implements NavigationView.
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_authen, new SignInFragment()).commit();
                 navigationView.setCheckedItem(R.id.nav_signIn);
             }
-            else if(intent.equals("signup"))
+            else if(intent.equals("signUp"))
             {
                 Log.d("creation","signUn fragment created");
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_authen, new SignUpFragment()).commit();

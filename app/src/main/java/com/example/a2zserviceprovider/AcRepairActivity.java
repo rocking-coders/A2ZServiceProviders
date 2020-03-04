@@ -66,7 +66,7 @@ public class AcRepairActivity extends AppCompatActivity implements NavigationVie
         if (savedInstanceState == null) {
             //first fragment to be opened - homeFragment along with highlighted
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container2, new AcRepairFragment()).commit();
-            //navigationView.setCheckedItem(R.id.nav_home);
+            navigationView.setCheckedItem(R.id.nav_services);
         }
     }
 
