@@ -52,8 +52,6 @@ public class AcRepairFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_ac_repair, container, false);
         ctx = getActivity();
 
-        textLatLong = root.findViewById(R.id.textLatLong);
-
         root.findViewById(R.id.buttonGetCurrentLocation).setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -66,10 +64,9 @@ public class AcRepairFragment extends Fragment {
                             REQUEST_CODE_LOCATION_PERMISSION
                     );
                 } else {
-                    //getCurrentLocation();
-                    backgroundWorker bw = new backgroundWorker(getActivity());
-                    bw.execute();
-                    Log.d("test1", "background work assigned");
+                    Log.d("test1", "Assigning a background worker ");
+                    locationFind obj = new locationFind(getActivity());
+                    obj.locationGet("AC Mechanic");
                 }
             }
         });
@@ -87,126 +84,6 @@ public class AcRepairFragment extends Fragment {
                 Toast.makeText(getActivity(), "Permission denied!", Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    //background worker
-    class backgroundWorker extends AsyncTask<Void, Void, Void> {
-        AlertDialog alertDialog;
-        Context context;
-        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        public backgroundWorker(Context ctx) {
-            context = ctx;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            Log.d("test1", "onPreExecute");
-            alertDialog = new AlertDialog.Builder(context).create();
-            alertDialog.setTitle("Error");
-            progressDialog = new ProgressDialog(ctx);
-            progressDialog.setCancelable(false);
-            progressDialog.setMessage("Processing");
-            showDialog();
-        }
-
-        private void showDialog() {
-            Log.d("test1", "Progress bar is started");
-            if (!progressDialog.isShowing()) {
-                progressDialog.show();
-            }
-        }
-
-        private void hideDialog() {
-            Log.d("test1", "progress bar is stopped");
-            if (progressDialog.isShowing())
-                progressDialog.dismiss();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            Log.d("test1", "doInBackground");
-            LocationRequest locationRequest = new LocationRequest();
-            locationRequest.setInterval(10000);
-            locationRequest.setFastestInterval(3000);
-            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-            LocationServices.getFusedLocationProviderClient(getActivity())
-                    .requestLocationUpdates(locationRequest, new LocationCallback() {
-
-                        @Override
-                        public void onLocationResult(LocationResult locationResult) {
-                            super.onLocationResult(locationResult);
-                            LocationServices.getFusedLocationProviderClient(getActivity())
-                                    .removeLocationUpdates(this);
-                            if (locationResult != null && locationResult.getLocations().size() > 0) {
-                                int latestLocationIndex = locationResult.getLocations().size() - 1;
-                                double latitude =
-                                        locationResult.getLocations().get(latestLocationIndex).getLatitude();
-                                double longitude =
-                                        locationResult.getLocations().get(latestLocationIndex).getLongitude();
-                                textLatLong.setText(
-                                        String.format(
-                                                "Latitude: %s\nLongitude: %s",
-                                                latitude,
-                                                longitude
-                                        )
-                                );
-
-                                Location location = new Location("providerNA");
-                                location.setLatitude(latitude);
-                                location.setLongitude(longitude);
-                                //till here we got latitude and longitude
-
-                                //converting longitude and latitude into address
-                                String errorMessage = "";
-                                Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-                                List<Address> addresses = null;
-                                try {
-                                    addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                                } catch (Exception exception) {
-                                    errorMessage = exception.getMessage();
-                                }
-                                if (addresses == null || addresses.isEmpty()) {
-                                    //could not able to fetch address from longitude and latitude
-                                    //then we have to take address manually
-                                    //Code it here
-                                    Log.d("test1", errorMessage);
-                                } else {
-                                    //we got the address
-                                    Address address = addresses.get(0);
-                                    //combining all addresses into array list if multiple addresses are fetched from given longitude and latitude
-                                    /*
-                                    ArrayList<String> addressFragments = new ArrayList<>();
-                                    for(int i = 0;i <= address.getMaxAddressLineIndex();i++){
-                                        addressFragments.add(address.getAddressLine(i));
-                                        Log.d("address",address.getAddressLine(i));
-                                    }
-                                    */
-                                    //we are getting only one match to corresponding longitude and latitude thus there is no benefit of using array list
-                                    Log.d("pin code", address.getAddressLine(0));
-                                }
-                                hideDialog();
-                            } else {
-                                hideDialog();
-                            }
-                        }
-                    }, Looper.getMainLooper());
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            Log.d("test1","onPostExecute");
-           //after complete execution of background task redirect the page to the fragment for showing the result
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            Log.d("test1","onProgressUpdate");
-            super.onProgressUpdate(values);
-        }
-
     }
 
 }
