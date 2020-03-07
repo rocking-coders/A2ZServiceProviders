@@ -41,7 +41,7 @@
             android:layout_marginEnd="30dp"
             android:backgroundTint="@android:color/transparent"
             android:hint="Name"
-            android:inputType="textEmailAddress"
+            android:inputType="text"
             android:padding="15dp"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white" />
@@ -83,7 +83,7 @@
             android:layout_marginEnd="30dp"
             android:backgroundTint="@android:color/transparent"
             android:hint="Password"
-            android:inputType="textEmailAddress"
+            android:inputType="textPassword"
             android:padding="15dp"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white" />
@@ -149,7 +149,6 @@
                 android:layout_centerInParent="true"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
-                android:onClick="OpenSigninPage"
                 android:padding="15dp"
                 android:text="Sign in"
                 android:textColor="@android:color/white"

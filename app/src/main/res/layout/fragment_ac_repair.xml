@@ -25,7 +25,7 @@
         android:id="@+id/ac_repair2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose from below"
+        android:text="Fill the following details"
         android:textColor="@android:color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -35,51 +35,31 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.23" />
 
-    <RadioGroup
-        android:layout_width="171dp"
-        android:layout_height="315dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:padding="10dp"
+
+    <EditText
+        android:id="@+id/problemText"
+        android:layout_width="203dp"
+        android:layout_height="160dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Specify Your Problem"
+        android:inputType="textMultiLine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.109"
+        app:layout_constraintHorizontal_bias="0.451"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.567">
+        app:layout_constraintVertical_bias="0.499" />
 
-        <RadioButton
-            android:id="@+id/technician1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:text="Technician 1" />
+    <Button
+        android:id="@+id/buttonGetCurrentLocation"
+        android:layout_width="143dp"
+        android:layout_height="45dp"
+        android:text="Submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.931" />
 
-        <RadioButton
-            android:id="@+id/technician2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:text="Technician 2" />
-
-        <RadioButton
-            android:id="@+id/technician3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:text="Technician 3" />
-
-        <Button
-            android:id="@+id/buttonGetCurrentLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Submit" />
-
-        <TextView
-            android:id="@+id/textLatLong"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-
-    </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>
