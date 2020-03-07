@@ -16,20 +16,18 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class HomeFragment extends Fragment implements View.OnClickListener{
     Button button_ac_repair,button_plumber,button_carpenter,button_painter,button_tutor;
-    private FirebaseDatabase database;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        //Retrieving instance of project connected firebase database
-        //database=FirebaseDatabase.getInstance();
         button_ac_repair = root.findViewById(R.id.ac_repair);
         button_ac_repair.setOnClickListener(this);
         button_plumber = root.findViewById(R.id.plumber);
         button_plumber.setOnClickListener(this);
         button_painter = root.findViewById(R.id.painter);
         button_painter.setOnClickListener(this);
+
         return root;
     }
     @Override

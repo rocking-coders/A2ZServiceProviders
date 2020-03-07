@@ -3,6 +3,7 @@ package com.example.a2zserviceprovider;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -108,6 +109,11 @@ public class locationFind {
                                 //Log.d("test1", address.getAddressLine(0));
                                 //getting the pin code in string
                                 String geoaddress = address.getAddressLine(0);
+                                SharedPreferences preferences = context.getSharedPreferences("services Data",Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putString("serviceLocation",geoaddress);
+                                editor.commit();
+
                                 int h = geoaddress.lastIndexOf(',');
                                 String pincode = geoaddress.substring(h - 5, h);
                                 Log.d("test1", "locationFind:: " + pincode);

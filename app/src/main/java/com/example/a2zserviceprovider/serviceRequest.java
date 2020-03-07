@@ -2,8 +2,6 @@ package com.example.a2zserviceprovider;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -27,12 +25,13 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-public class findTechnician extends AsyncTask<String, Void, ArrayList<String> > {
+public class serviceRequest extends AsyncTask<String, Void, String> {
 
     ProgressDialog progressDialog;
     AlertDialog alertDialog;
     Context context;
-    findTechnician(Context ctx){
+
+    serviceRequest(Context ctx){
         context = ctx;
     }
 
@@ -56,72 +55,74 @@ public class findTechnician extends AsyncTask<String, Void, ArrayList<String> > 
     }
 
     @Override
-    protected ArrayList<String> doInBackground(String... strings) {
-        ArrayList<String> result = new ArrayList<String>();
-        String pincode = strings[0],technicianType = strings[1];
+    protected String doInBackground(String... args) {
+        String result="";
+        String technicianName = args[1];
+        String technicianEmail = args[0];
+        String serviceType = args[2];
+        SharedPreferences sharedPreferences = context.getSharedPreferences("Login Data", Context.MODE_PRIVATE);
+        String username = sharedPreferences.getString("username","");
+        String useremail = sharedPreferences.getString("UserEmail","");
+        sharedPreferences = context.getSharedPreferences("services Data",Context.MODE_PRIVATE);
+        String serviceLocation = sharedPreferences.getString("serviceLocation","");
+        Log.d("test2","Data to be passed : "+technicianEmail+" "+technicianName+" "+useremail+" "+username+" "+serviceType+" "+serviceLocation);
 
-        Log.d("test1","In findTechnician::doInBackground() pincode = "+pincode);
-        String LOGIN_URL = "https://a2zserviceproviders.000webhostapp.com/db_connectivity/findTechnician.php";
+        String LOGIN_URL = "https://a2zserviceproviders.000webhostapp.com/db_connectivity/serviceRequest.php";
         try {
             URL url = new URL(LOGIN_URL);
             HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setDoInput(true);
             httpURLConnection.setDoOutput(true);
-            Log.d("test1","Output stream open");
             OutputStream outputStream = httpURLConnection.getOutputStream();
             BufferedWriter bufferedWriter = new BufferedWriter((new OutputStreamWriter(outputStream,"UTF-8")));
-            String post_data = URLEncoder.encode("pincode", "UTF-8")+"="+URLEncoder.encode(pincode, "UTF-8")+"&"
-                    +URLEncoder.encode("technicianType", "UTF-8")+"="+URLEncoder.encode(technicianType, "UTF-8");
+            String post_data = URLEncoder.encode("userEmail", "UTF-8")+"="+URLEncoder.encode(useremail, "UTF-8")+"&"
+                    +URLEncoder.encode("userName", "UTF-8")+"="+URLEncoder.encode(username, "UTF-8")+"&"
+                    +URLEncoder.encode("technicianName", "UTF-8")+"="+URLEncoder.encode(technicianName, "UTF-8")+"&"
+                    +URLEncoder.encode("technicianEmail", "UTF-8")+"="+URLEncoder.encode(technicianEmail, "UTF-8")+"&"
+                    +URLEncoder.encode("serviceType", "UTF-8")+"="+URLEncoder.encode(serviceType, "UTF-8")+"&"
+                    +URLEncoder.encode("serviceLocation", "UTF-8")+"="+URLEncoder.encode(serviceLocation, "UTF-8");
             bufferedWriter.write(post_data);
             bufferedWriter.flush();
             bufferedWriter.close();
             outputStream.close();
-            Log.d("test1","Data Sent, Waiting for input");
             InputStream inputStream = httpURLConnection.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
             String line="";
-            //db is returning only three results like this
-            //  Mahesh Kumar
-            //  m@g.com
-            //  Pawan Kumar
-            //  p@g.com
-            //  Harsh @g.com
-            //  h@g.com
             while((line=bufferedReader.readLine())!=null)
             {
-                result.add(line);
-                Log.d("test1",line);
+                result += line;
             }
             //here result contain the username that is returned from dB.
             bufferedReader.close();
             inputStream.close();
             httpURLConnection.disconnect();
-            Log.d("test1", String.valueOf(result));
-            //return result to postExecute
+            //return result;
+            Log.d("test2","result  = "+result);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+
         return result;
     }
 
     @Override
-    protected void onPostExecute(ArrayList<String > aVoid) {
+    protected void onPostExecute(String aVoid) {
         hideDialog();
-        Log.d("test1","findTechnician::onPostExecute() "+aVoid);
-        //sending the technician result as bundle arguments
-        Fragment f= new AcRepairTechniciansFragment();
-        Bundle b = new Bundle();
-        b.putStringArrayList("Technicians",aVoid);
-        f.setArguments(b);
-        Activity activity = (Activity)context;
-        FragmentActivity fragmentActivity = (FragmentActivity)activity;
-        fragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container2,f).commit();
-        //getSupportFragmentManager operates on fragmentActivity object
-        //transacting from one fragment to another fragment is done like this
+        Log.d("test1","serviceRequest::onPostExecute() "+aVoid);
+        if(aVoid.equals("inserted")) {
+            Fragment f = new successfulRequestFragment();
+            Activity activity = (Activity) context;
+            FragmentActivity fragmentActivity = (FragmentActivity) activity;
+            fragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container2, f).commit();
+            //getSupportFragmentManager operates on fragmentActivity object
+            //transacting from one fragment to another fragment is done like this
+        }
+        else {
+            alertDialog.setMessage("Something went wrong! Please Try Again");
+            alertDialog.show();
+        }
     }
 }

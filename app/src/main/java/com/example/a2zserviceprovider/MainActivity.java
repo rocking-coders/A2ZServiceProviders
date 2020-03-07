@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //changing Navigation buttons and updating name of user
         SharedPreferences sharedPreferences = getSharedPreferences("Login Data", Context.MODE_PRIVATE);
         String username = sharedPreferences.getString("username","");
+        String useremail = sharedPreferences.getString("useremail","");
         Log.d("Username",username);
         if(!username.equals("")){
             Log.d("status","Logged In");
@@ -55,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             view = navigationView.getHeaderView(0);
             TextView textView = view.findViewById(R.id.username);
             textView.setText(username);
+            textView = view.findViewById(R.id.useremail);
+            textView.setText(useremail);
         }
 
         if (savedInstanceState == null) {

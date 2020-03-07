@@ -49,6 +49,7 @@ import java.util.Map;
 
 public class SignInFragment extends Fragment {
 
+    String email;
     Context ctx;
     ProgressDialog progressDialog;
     @Nullable
@@ -66,7 +67,7 @@ public class SignInFragment extends Fragment {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = ETemail.getText().toString();
+                email = ETemail.getText().toString();
                 String password = ETpassword.getText().toString();
                 backgroundWorker bW = new backgroundWorker(getActivity());
                 bW.execute(email,password);
@@ -150,10 +151,12 @@ public class SignInFragment extends Fragment {
             //else aVoid = username
             else
             {
-                Log.d("UserName",aVoid+" Signed In");
+                Log.d("UserName",aVoid+" Signed In email = "+email);
                 SharedPreferences preferences = getActivity().getSharedPreferences("Login Data",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("username",aVoid);
+                editor.putString("UserEmail",email);
+                Log.d("test2","email = "+email+" asd");
                 editor.commit();
                 Intent i = new Intent(ctx,MainActivity.class);
                 startActivity(i);
