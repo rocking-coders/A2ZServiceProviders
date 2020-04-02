@@ -16,6 +16,10 @@
             android:id="@+id/nav_signUp"
             android:icon="@drawable/ic_home"
             android:title="Sign Up" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_home"
+            android:title="Log Out" />
 
         <item
             android:id="@+id/nav_services"

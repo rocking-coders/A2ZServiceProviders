@@ -26,11 +26,13 @@ public class locationFind {
     Context context;
     ProgressDialog progressDialog;
     AlertDialog alertDialog;
+    String serviceType;
     //FragmentManager fragmentManager;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    locationFind(Context ctx) {
+    locationFind(Context ctx, String sT) {
         context = ctx;
+        serviceType = sT;
         progressDialog = new ProgressDialog(context);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Processing");
@@ -117,7 +119,7 @@ public class locationFind {
                                 int h = geoaddress.lastIndexOf(',');
                                 String pincode = geoaddress.substring(h - 5, h);
                                 Log.d("test1", "locationFind:: " + pincode);
-                                findTechnician obj = new findTechnician(context);
+                                findTechnician obj = new findTechnician(context, serviceType);
                                 obj.execute(pincode,technicianType);
 
                             }

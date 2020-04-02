@@ -28,6 +28,8 @@ public class AcRepairTechniciansFragment extends Fragment implements View.OnClic
         View root = inflater.inflate(R.layout.fragment_ac_repair_technicians, container, false);
         Bundle b = this.getArguments();
         final ArrayList<String> technicians = b.getStringArrayList("Technicians");
+        //removing arguments in bundle
+        this.getArguments().remove("Technicians");
 
         radioGroup = root.findViewById(R.id.technicianGroup);
         t1 = root.findViewById(R.id.technician1);

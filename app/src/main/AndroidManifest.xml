@@ -33,7 +33,8 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".AuthenActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:noHistory="true"></activity>
     </application>
 
 </manifest>

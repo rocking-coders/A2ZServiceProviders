@@ -39,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+        navigationView.setCheckedItem(R.id.nav_home);
+
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         Log.d("status","Not logged in");
@@ -46,11 +49,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //changing Navigation buttons and updating name of user
         SharedPreferences sharedPreferences = getSharedPreferences("Login Data", Context.MODE_PRIVATE);
         String username = sharedPreferences.getString("username","");
-        String useremail = sharedPreferences.getString("useremail","");
+        String useremail = sharedPreferences.getString("UserEmail","");
         Log.d("Username",username);
+        Menu menu = navigationView.getMenu();
         if(!username.equals("")){
             Log.d("status","Logged In");
-            Menu menu = navigationView.getMenu();
             menu.findItem(R.id.nav_signIn).setVisible(false);
             menu.findItem(R.id.nav_signUp).setVisible(false);
             view = navigationView.getHeaderView(0);
@@ -59,12 +62,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             textView = view.findViewById(R.id.useremail);
             textView.setText(useremail);
         }
+        else{
+            menu.findItem(R.id.nav_logout).setVisible(false);
+            menu.findItem(R.id.nav_services).setVisible(false);
+        }
 
         if (savedInstanceState == null) {
-                //first fragment to be opened - homeFragment along with highlighted
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container1, new HomeFragment()).commit();
-                navigationView.setCheckedItem(R.id.nav_home);
-            }
+            //first fragment to be opened - homeFragment along with highlighted
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container1, new HomeFragment()).commit();
+            //navigationView.setCheckedItem(R.id.nav_home);
+        }
     }
 
     @Override
@@ -77,7 +84,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             }
             case R.id.nav_services: {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container1, new ServicesFragment()).commit();
+                fetchTotalServicesBW bw = new fetchTotalServicesBW(this, "MainActivity");
+                bw.execute();
                 navigationView.setCheckedItem(R.id.nav_services);
                 break;
             }
@@ -90,6 +98,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent_signin = new Intent(MainActivity.this, AuthenActivity.class);
                 intent_signin.putExtra("activity", "signIn");
                 startActivity(intent_signin);
+                break;
+            }
+            case R.id.nav_logout: {
+                SharedPreferences sharedPreferences = getSharedPreferences("Login Data", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.apply();
+                Intent intent_new_session = new Intent(this, MainActivity.class);
+                intent_new_session.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent_new_session);
                 break;
             }
             case R.id.nav_signUp: {
@@ -105,6 +123,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(this, "Feedback", Toast.LENGTH_SHORT).show();
                 break;
         }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout1);
+        drawer.closeDrawer(GravityCompat.START);
         return true;
 
     }

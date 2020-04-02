@@ -65,7 +65,8 @@ public class serviceRequest extends AsyncTask<String, Void, String> {
         String useremail = sharedPreferences.getString("UserEmail","");
         sharedPreferences = context.getSharedPreferences("services Data",Context.MODE_PRIVATE);
         String serviceLocation = sharedPreferences.getString("serviceLocation","");
-        Log.d("test2","Data to be passed : "+technicianEmail+" "+technicianName+" "+useremail+" "+username+" "+serviceType+" "+serviceLocation);
+        String problem_specification = sharedPreferences.getString("problem_specification", "");
+        Log.d("test2","Data to be passed : "+technicianEmail+" "+technicianName+" "+useremail+" "+username+" "+serviceType+" "+serviceLocation+" "+problem_specification);
 
         String LOGIN_URL = "https://a2zserviceproviders.000webhostapp.com/db_connectivity/serviceRequest.php";
         try {
@@ -81,7 +82,8 @@ public class serviceRequest extends AsyncTask<String, Void, String> {
                     +URLEncoder.encode("technicianName", "UTF-8")+"="+URLEncoder.encode(technicianName, "UTF-8")+"&"
                     +URLEncoder.encode("technicianEmail", "UTF-8")+"="+URLEncoder.encode(technicianEmail, "UTF-8")+"&"
                     +URLEncoder.encode("serviceType", "UTF-8")+"="+URLEncoder.encode(serviceType, "UTF-8")+"&"
-                    +URLEncoder.encode("serviceLocation", "UTF-8")+"="+URLEncoder.encode(serviceLocation, "UTF-8");
+                    +URLEncoder.encode("serviceLocation", "UTF-8")+"="+URLEncoder.encode(serviceLocation, "UTF-8")+"&"
+                    +URLEncoder.encode("problem", "UTF-8")+"="+URLEncoder.encode(problem_specification, "UTF-8");
             bufferedWriter.write(post_data);
             bufferedWriter.flush();
             bufferedWriter.close();
@@ -113,7 +115,7 @@ public class serviceRequest extends AsyncTask<String, Void, String> {
         hideDialog();
         Log.d("test1","serviceRequest::onPostExecute() "+aVoid);
         if(aVoid.equals("inserted")) {
-            Fragment f = new successfulRequestFragment();
+            Fragment f = new successfulRequestFragment(context);
             Activity activity = (Activity) context;
             FragmentActivity fragmentActivity = (FragmentActivity) activity;
             fragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container2, f).commit();

@@ -156,12 +156,12 @@ public class SignInFragment extends Fragment {
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("username",aVoid);
                 editor.putString("UserEmail",email);
-                Log.d("test2","email = "+email+" asd");
                 editor.commit();
                 Intent i = new Intent(ctx,MainActivity.class);
+                //getActivity().finish();
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
-                getActivity().finish();
-                 //write here the code to be executed after successful sign In
+                //write here the code to be executed after successful sign In
             }
         }
 

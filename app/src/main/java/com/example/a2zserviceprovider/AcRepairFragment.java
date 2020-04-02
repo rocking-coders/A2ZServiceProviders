@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -18,6 +19,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +54,19 @@ public class AcRepairFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_ac_repair, container, false);
         ctx = getActivity();
+        final EditText problem_detail = root.findViewById(R.id.problemText);
+
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences("Login Data", Context.MODE_PRIVATE);
+        String username = sharedPreferences.getString("username","");
+
+        TextView warning_message = root.findViewById(R.id.submit_warning);
+        Button submit_button = root.findViewById(R.id.buttonGetCurrentLocation);
+        if(!username.equals("")){
+            warning_message.setVisibility(View.INVISIBLE);
+        }
+        else{
+            submit_button.setEnabled(false);
+        }
 
         root.findViewById(R.id.buttonGetCurrentLocation).setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -64,8 +80,14 @@ public class AcRepairFragment extends Fragment {
                             REQUEST_CODE_LOCATION_PERMISSION
                     );
                 } else {
+                    String problem = problem_detail.getText().toString();
+                    Log.d("Problem_detail", problem);
+                    SharedPreferences preferences = ctx.getSharedPreferences("services Data",Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("problem_specification",problem);
+                    editor.commit();
                     Log.d("test1", "Assigning a background worker ");
-                    locationFind obj = new locationFind(getActivity());
+                    locationFind obj = new locationFind(getActivity(), "AcRepair");
                     obj.locationGet("AC Mechanic");
                 }
             }
