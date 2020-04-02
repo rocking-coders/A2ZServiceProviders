@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".AuthenActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
@@ -151,6 +151,7 @@
                 android:layout_marginLeft="30dp"
                 android:padding="15dp"
                 android:text="Sign in"
+                android:onClick="OpenSigninPage"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />

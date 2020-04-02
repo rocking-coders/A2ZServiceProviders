@@ -11,6 +11,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -48,6 +49,10 @@ public class AuthenActivity extends AppCompatActivity implements NavigationView.
         navigationView = findViewById(R.id.nav_view_authen);
         navigationView.setNavigationItemSelectedListener(this);
 
+        Menu menu = navigationView.getMenu();
+        menu.findItem(R.id.nav_services).setVisible(false);
+        menu.findItem(R.id.nav_logout).setVisible(false);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -78,12 +83,7 @@ public class AuthenActivity extends AppCompatActivity implements NavigationView.
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_home:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_authen, new HomeFragment()).commit();
-                navigationView.setCheckedItem(R.id.nav_home);
-                break;
-            case R.id.nav_services:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_authen, new ServicesFragment()).commit();
-                navigationView.setCheckedItem(R.id.nav_services);
+                finish();
                 break;
             case R.id.nav_setting:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_authen, new SettingFragment()).commit();
@@ -104,6 +104,8 @@ public class AuthenActivity extends AppCompatActivity implements NavigationView.
                 Toast.makeText(this, "Feedback", Toast.LENGTH_SHORT).show();
                 break;
         }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_authen);
+        drawer.closeDrawer(GravityCompat.START);
         return true;
 
     }

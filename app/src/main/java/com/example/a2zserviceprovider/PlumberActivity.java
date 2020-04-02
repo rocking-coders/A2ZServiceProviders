@@ -77,7 +77,8 @@ public class PlumberActivity extends AppCompatActivity implements NavigationView
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_plumber, new HomeFragment()).commit();
                 break;
             case R.id.nav_services:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_plumber, new ServicesFragment()).commit();
+                fetchTotalServicesBW bw = new fetchTotalServicesBW(this, "Plumber");
+                bw.execute();
                 break;
             case R.id.nav_setting:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_plumber, new SettingFragment()).commit();
@@ -99,6 +100,8 @@ public class PlumberActivity extends AppCompatActivity implements NavigationView
                 Toast.makeText(this, "Feedback", Toast.LENGTH_SHORT).show();
                 break;
         }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_plumber);
+        drawer.closeDrawer(GravityCompat.START);
         return true;
 
     }
