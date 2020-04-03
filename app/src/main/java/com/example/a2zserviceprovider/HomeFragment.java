@@ -11,8 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.example.a2zserviceprovider.ACRepair.AcRepairActivity;
+import com.example.a2zserviceprovider.Plumber.PlumberActivity;
 
 public class HomeFragment extends Fragment implements View.OnClickListener{
     Button button_ac_repair,button_plumber,button_carpenter,button_painter,button_tutor;

@@ -1,4 +1,4 @@
-package com.example.a2zserviceprovider;
+package com.example.a2zserviceprovider.Authentication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -7,40 +7,30 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.a2zserviceprovider.R;
+import com.example.a2zserviceprovider.SettingFragment;
 import com.google.android.material.navigation.NavigationView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class AuthenActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     private NavigationView navigationView;
+    private View view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authen);
-        Log.d("Creation","Authentication Activity Created");
-        Intent i=getIntent();
+        Log.d("Creation", "Authentication Activity Created");
+        Intent i = getIntent();
         //getting intent from main activity or any activity where sign in or sign up button is clicked
         Toolbar toolbar = findViewById(R.id.toolbar_authen);
         setSupportActionBar(toolbar);
@@ -53,6 +43,13 @@ public class AuthenActivity extends AppCompatActivity implements NavigationView.
         menu.findItem(R.id.nav_services).setVisible(false);
         menu.findItem(R.id.nav_logout).setVisible(false);
 
+        //removing username and useremail since it is unsigned
+        view = navigationView.getHeaderView(0);
+        TextView textView1 = view.findViewById(R.id.username);
+        TextView textView2 = view.findViewById(R.id.useremail);
+        textView1.setVisibility(View.INVISIBLE);
+        textView2.setVisibility(View.INVISIBLE);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -61,16 +58,14 @@ public class AuthenActivity extends AppCompatActivity implements NavigationView.
         //for checking whether user has clicked sign in or sign up activity accordingly he will be directed to that fragment
         String intent = i.getStringExtra("activity");
         //printing intent message on logcat screen
-        Log.d("message",intent);
+        Log.d("message", intent);
 
         if (savedInstanceState == null) {
-            if(intent.equals("signIn")) {
+            if (intent.equals("signIn")) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_authen, new SignInFragment()).commit();
                 navigationView.setCheckedItem(R.id.nav_signIn);
-            }
-            else if(intent.equals("signUp"))
-            {
-                Log.d("creation","signUn fragment created");
+            } else if (intent.equals("signUp")) {
+                Log.d("creation", "signUn fragment created");
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_authen, new SignUpFragment()).commit();
                 navigationView.setCheckedItem(R.id.nav_signUp);
             }
@@ -118,12 +113,13 @@ public class AuthenActivity extends AppCompatActivity implements NavigationView.
             super.onBackPressed();
         }
     }
+
     public void OpenSignupPage(View view) {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_authen, new SignUpFragment()).commit();
     }
-    public void OpenSigninPage(View view)
-    {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_authen,new SignInFragment()).commit();
+
+    public void OpenSigninPage(View view) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_authen, new SignInFragment()).commit();
     }
 
 }

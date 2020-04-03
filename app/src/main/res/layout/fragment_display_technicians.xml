@@ -5,7 +5,7 @@
     android:id="@+id/ac_repair_technicians_fragement"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AcRepairTechniciansFragment">
+    tools:context=".displayTechniciansFragment">
 
     <TextView
         android:id="@+id/textView2"
@@ -61,7 +61,6 @@
         android:id="@+id/buttonRequest"
         android:layout_width="139dp"
         android:layout_height="46dp"
-        android:onClick="onClickSubmitButton"
         android:text="Submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

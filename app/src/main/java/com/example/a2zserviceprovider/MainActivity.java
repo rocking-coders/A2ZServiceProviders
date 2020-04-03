@@ -10,23 +10,24 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.a2zserviceprovider.Authentication.AuthenActivity;
+import com.example.a2zserviceprovider.BackgroundWorkers.fetchTotalServicesBW;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private View view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,27 +45,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        Log.d("status","Not logged in");
+        Log.d("status", "Not logged in");
 
         //changing Navigation buttons and updating name of user
         SharedPreferences sharedPreferences = getSharedPreferences("Login Data", Context.MODE_PRIVATE);
-        String username = sharedPreferences.getString("username","");
-        String useremail = sharedPreferences.getString("UserEmail","");
-        Log.d("Username",username);
+        String username = sharedPreferences.getString("username", "");
+        String useremail = sharedPreferences.getString("UserEmail", "");
+        Log.d("Username", username);
+
+        //upating UI
         Menu menu = navigationView.getMenu();
-        if(!username.equals("")){
-            Log.d("status","Logged In");
+        view = navigationView.getHeaderView(0);
+        TextView textView1 = view.findViewById(R.id.username);
+        TextView textView2 = view.findViewById(R.id.useremail);
+
+        //if user is signed in
+        if (!username.equals("")) {
+            Log.d("status", "Logged In");
+            //making sign in and sign up invisible
             menu.findItem(R.id.nav_signIn).setVisible(false);
             menu.findItem(R.id.nav_signUp).setVisible(false);
-            view = navigationView.getHeaderView(0);
-            TextView textView = view.findViewById(R.id.username);
-            textView.setText(username);
-            textView = view.findViewById(R.id.useremail);
-            textView.setText(useremail);
-        }
-        else{
+
+            //updating user image and email
+            textView1.setText(username);
+            textView2.setText(useremail);
+        } else {
             menu.findItem(R.id.nav_logout).setVisible(false);
             menu.findItem(R.id.nav_services).setVisible(false);
+            textView1.setVisibility(View.INVISIBLE);
+            textView2.setVisibility(View.INVISIBLE);
         }
 
         if (savedInstanceState == null) {
@@ -77,8 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.nav_home:
-            {
+            case R.id.nav_home: {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container1, new HomeFragment()).commit();
                 navigationView.setCheckedItem(R.id.nav_home);
                 break;
@@ -90,8 +98,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             }
             case R.id.nav_setting: {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container1, new SettingFragment()).commit();
-                navigationView.setCheckedItem(R.id.nav_setting);
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container1, new SettingFragment()).commit();
+//                navigationView.setCheckedItem(R.id.nav_setting);
+                Intent settings = new Intent(this, SettingsPrefActivity.class);
+                startActivity(settings);
                 break;
             }
             case R.id.nav_signIn: {

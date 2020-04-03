@@ -1,9 +1,7 @@
-package com.example.a2zserviceprovider;
+package com.example.a2zserviceprovider.BackgroundWorkers;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,6 +11,9 @@ import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+
+import com.example.a2zserviceprovider.R;
+import com.example.a2zserviceprovider.ServicesFragment;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -27,16 +28,19 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-public class findTechnician extends AsyncTask<String, Void, ArrayList<String> > {
+public class fetchTotalServicesBW extends AsyncTask<Void, Void, ArrayList<String> > {
 
     ProgressDialog progressDialog;
     AlertDialog alertDialog;
     Context context;
-    String serviceType;
-
-    findTechnician(Context ctx, String sT){
+    SharedPreferences sharedPreferences;
+    String userName,userEmail, serviceType;
+    public fetchTotalServicesBW(Context ctx, String sT){
         context = ctx;
         serviceType = sT;
+        sharedPreferences = ctx.getSharedPreferences("Login Data",Context.MODE_PRIVATE);
+        userName = sharedPreferences.getString("username","");
+        userEmail = sharedPreferences.getString("UserEmail","");
     }
 
     private void showDialog() {
@@ -58,79 +62,69 @@ public class findTechnician extends AsyncTask<String, Void, ArrayList<String> > 
         showDialog();
     }
 
-    @Override
-    protected ArrayList<String> doInBackground(String... strings) {
-        ArrayList<String> result = new ArrayList<String>();
-        String pincode = strings[0];
-        String technicianType = strings[1];
 
-        Log.d("test1","In findTechnician::doInBackground() pincode = "+pincode);
-        String LOGIN_URL = "https://a2zserviceproviders.000webhostapp.com/db_connectivity/findTechnician.php";
+    @Override
+    protected ArrayList<String > doInBackground(Void... voids) {
+        ArrayList<String> result = new ArrayList<String>();
+        Log.d("test3","doInBackground");
+        String LOGIN_URL = "https://a2zserviceproviders.000webhostapp.com/db_connectivity/fetchServicesDone.php";
         try {
             URL url = new URL(LOGIN_URL);
             HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setDoInput(true);
             httpURLConnection.setDoOutput(true);
-            Log.d("test1","Output stream open");
             OutputStream outputStream = httpURLConnection.getOutputStream();
             BufferedWriter bufferedWriter = new BufferedWriter((new OutputStreamWriter(outputStream,"UTF-8")));
-            String post_data = URLEncoder.encode("pincode", "UTF-8")+"="+URLEncoder.encode(pincode, "UTF-8")+"&"
-                    +URLEncoder.encode("technicianType", "UTF-8")+"="+URLEncoder.encode(technicianType, "UTF-8");
+            String post_data = URLEncoder.encode("userEmail", "UTF-8")+"="+URLEncoder.encode(userEmail, "UTF-8");
             bufferedWriter.write(post_data);
             bufferedWriter.flush();
             bufferedWriter.close();
             outputStream.close();
-            Log.d("test1","Data Sent, Waiting for input");
             InputStream inputStream = httpURLConnection.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
             String line="";
-            //db is returning only three results like this
-            //  Mahesh Kumar
-            //  m@g.com
-            //  Pawan Kumar
-            //  p@g.com
-            //  Harsh @g.com
-            //  h@g.com
             while((line=bufferedReader.readLine())!=null)
             {
                 result.add(line);
-                Log.d("test1",line);
+                Log.d("test3",line);
             }
             //here result contain the username that is returned from dB.
             bufferedReader.close();
             inputStream.close();
             httpURLConnection.disconnect();
-            Log.d("test1", String.valueOf(result));
-            //return result to postExecute
+            //return result;
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+        Log.d("test3", String.valueOf(result));
         return result;
     }
 
     @Override
-    protected void onPostExecute(ArrayList<String > aVoid) {
+    protected void onPostExecute(ArrayList<String> aVoid) {
         hideDialog();
-        Log.d("test1","findTechnician::onPostExecute() "+aVoid);
-        //sending the technician result as bundle arguments
-        Fragment f= new AcRepairTechniciansFragment();
+        Log.d("test3","In postExecute");
+        for(String s:aVoid){
+            Log.d("test3",s);
+        }
+        Fragment f = new ServicesFragment(context);
         Bundle b = new Bundle();
-        b.putStringArrayList("Technicians",aVoid);
+        b.putStringArrayList("Services Offered",aVoid);
         f.setArguments(b);
-        Activity activity = (Activity)context;
-        FragmentActivity fragmentActivity = (FragmentActivity)activity;
-        if(serviceType.equals("AcRepair")) {
+        Activity activity = (Activity) context;
+        FragmentActivity fragmentActivity = (FragmentActivity) activity;
+        if(serviceType.equals("MainActivity")) {
+            fragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container1, f).commit();
+        }
+        else if(serviceType.equals("AcRepair")){
             fragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container2, f).commit();
-            //getSupportFragmentManager operates on fragmentActivity object
-            //transacting from one fragment to another fragment is done like this
         }
         else if(serviceType.equals("Plumber")){
             fragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_plumber, f).commit();
         }
     }
+
 }

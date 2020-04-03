@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AuthenActivity">
+    tools:context=".Authentication.AuthenActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="8dp"
-        android:text="Welcome\nBack"
+        android:text="@string/textView_welcome"
         android:textColor="@android:color/white"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -129,7 +129,7 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
                 android:padding="15dp"
-                android:text="Sign up"
+                android:text="@string/sign_up"
                 android:textColor="@android:color/white"
                 android:textSize="25sp"
                 android:textStyle="bold" />
@@ -150,7 +150,7 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
                 android:padding="15dp"
-                android:text="Sign in"
+                android:text="@string/sign_in"
                 android:onClick="OpenSigninPage"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"

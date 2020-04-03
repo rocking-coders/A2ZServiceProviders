@@ -1,4 +1,4 @@
-package com.example.a2zserviceprovider;
+package com.example.a2zserviceprovider.BackgroundWorkers;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -12,7 +12,6 @@ import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
-import androidx.fragment.app.FragmentManager;
 
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -30,7 +29,7 @@ public class locationFind {
     //FragmentManager fragmentManager;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    locationFind(Context ctx, String sT) {
+    public locationFind(Context ctx, String sT) {
         context = ctx;
         serviceType = sT;
         progressDialog = new ProgressDialog(context);
@@ -51,7 +50,7 @@ public class locationFind {
             progressDialog.dismiss();
     }
 
-    void locationGet(final String technicianType) {
+    public void locationGet(final String technicianType) {
 
         alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.setTitle("Message");
