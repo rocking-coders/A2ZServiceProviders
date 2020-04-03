@@ -36,8 +36,9 @@ public class accountInfoChange extends AsyncTask<Void, Void, String> {
     AlertDialog alertDialog;
     Context context;
     String changeKey, changeValue, email;
-    public accountInfoChange(String s, String value, String e){
+    public accountInfoChange(Context ctx, String s, String value, String e){
         changeKey = s;
+        context = ctx;
         changeValue = value;
         email = e;
     }
@@ -86,6 +87,7 @@ public class accountInfoChange extends AsyncTask<Void, Void, String> {
                 post_data=URLEncoder.encode("new_pass", "UTF-8")+"="+URLEncoder.encode(changeValue, "UTF-8")+"&"
                         +URLEncoder.encode("uemail", "UTF-8")+"="+URLEncoder.encode(email, "UTF-8");
             }
+            Log.d("test5", post_data);
             bufferedWriter.write(post_data);
             bufferedWriter.flush();
             bufferedWriter.close();
@@ -118,23 +120,27 @@ public class accountInfoChange extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String aVoid) {
         hideDialog();
-        if(aVoid.equals("invalid credentials")) {
-            alertDialog.setMessage(aVoid);
+        if(!aVoid.equals("success")) {
+            alertDialog.setMessage("Error");
             alertDialog.show();
         }
-        else
-        {
-//            Log.d("UserName",aVoid+" Signed In email = "+email);
-//            SharedPreferences preferences = getActivity().getSharedPreferences("Login Data",Context.MODE_PRIVATE);
-//            SharedPreferences.Editor editor = preferences.edit();
-//            editor.putString("username",aVoid);
-//            editor.putString("UserEmail",email);
-//            editor.commit();
-//            Intent i = new Intent(ctx, MainActivity.class);
-//            //getActivity().finish();
-//            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//            startActivity(i);
-//            //write here the code to be executed after successful sign In
+        else {
+            Log.d("test5", "successfully updated " + aVoid);
+
+            if (changeKey.equals("userName")) {
+                SharedPreferences sharedPreferences = context.getSharedPreferences("Login Data", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.remove("username");
+                editor.putString("username", changeValue);
+                editor.apply();
+                Log.d("test5", "updated username = " + sharedPreferences.getString("username", ""));
+                alertDialog.setMessage("success");
+                alertDialog.show();
+            }
+            else{
+                alertDialog.setMessage("Success");
+                alertDialog.show();
+            }
         }
     }
 }

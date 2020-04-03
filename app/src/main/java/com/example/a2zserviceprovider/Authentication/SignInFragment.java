@@ -146,24 +146,29 @@ public class SignInFragment extends Fragment {
         protected void onPostExecute(String aVoid) {
             hideDialog();
             //if there is not successful login then, aVoid="invalid credentials" that would be fetched
-            if(aVoid.equals("invalid credentials")) {
-                alertDialog.setMessage(aVoid);
-                alertDialog.show();
+            if(aVoid != null) {
+                if (aVoid.equals("invalid credentials")) {
+                    alertDialog.setMessage(aVoid);
+                    alertDialog.show();
+                }
+                //else aVoid = username
+                else {
+                    Log.d("UserName", aVoid + " Signed In email = " + email);
+                    SharedPreferences preferences = getActivity().getSharedPreferences("Login Data", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("username", aVoid);
+                    editor.putString("UserEmail", email);
+                    editor.apply();
+                    Intent i = new Intent(ctx, MainActivity.class);
+                    //getActivity().finish();
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(i);
+                    //write here the code to be executed after successful sign In
+                }
             }
-            //else aVoid = username
-            else
-            {
-                Log.d("UserName",aVoid+" Signed In email = "+email);
-                SharedPreferences preferences = getActivity().getSharedPreferences("Login Data",Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("username",aVoid);
-                editor.putString("UserEmail",email);
-                editor.commit();
-                Intent i = new Intent(ctx, MainActivity.class);
-                //getActivity().finish();
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(i);
-                //write here the code to be executed after successful sign In
+            else{
+                alertDialog.setMessage("Error! Occured. Please Try Again");
+                alertDialog.show();
             }
         }
 

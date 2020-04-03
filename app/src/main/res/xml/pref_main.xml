@@ -16,7 +16,9 @@
 
         <EditTextPreference
             android:key="@string/key_userpass"
-            android:title="Change Password"/>
+            android:title="Change Password"
+            android:inputType="textPassword"
+            />
 
         <ListPreference
             android:defaultValue="10"

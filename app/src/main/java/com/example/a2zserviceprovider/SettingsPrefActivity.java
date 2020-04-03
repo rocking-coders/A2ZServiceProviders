@@ -1,7 +1,6 @@
 package com.example.a2zserviceprovider;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,22 +11,24 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 
-import androidx.fragment.app.FragmentActivity;
-
 import com.example.a2zserviceprovider.BackgroundWorkers.accountInfoChange;
+
+import java.util.Map;
 
 public class SettingsPrefActivity extends AppCompatPreferenceActivity {
     private static final String TAG = SettingsPrefActivity.class.getSimpleName();
     private static String username, useremail;
+    private static Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,26 +48,29 @@ public class SettingsPrefActivity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_main);
 
+            context = getActivity();
+
             //user Account settings (name and email)
             PreferenceCategory general = (PreferenceCategory) findPreference(getString(R.string.key_category_gen));
             EditTextPreference userNamePreference = (EditTextPreference) findPreference(getString(R.string.key_username));
             Preference userEmailPreference = (Preference) findPreference(getString(R.string.key_useremail));
             EditTextPreference userPassPreference = (EditTextPreference) findPreference(getString(R.string.key_userpass));
-            //checking if sign in
-//            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("Login Data", Context.MODE_PRIVATE);
-//            String username = sharedPreferences.getString("username", "");
-//            String useremail = sharedPreferences.getString("UserEmail", "");
+
+
             if(!username.equals("")) {
                 //set userName
                 userNamePreference.setSummary(username);
                 userEmailPreference.setSummary(useremail);
 
+                //clearing all Default sharedPreferences as password as contained in it and others too.
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                sharedPreferences.edit().clear().apply();
+
                 // userName EditText change listener
                 bindPreferenceSummaryToValue(findPreference(getString(R.string.key_username)));
 
                 // userpass preference change listener
-                //bindPreferenceSummaryToValue(findPreference(getString(R.string.key_useremail)));
-
+                bindPreferenceSummaryToValue(findPreference(getString(R.string.key_userpass)));
             }
             //hiding userName preference if not signed in
             else{
@@ -87,6 +91,7 @@ public class SettingsPrefActivity extends AppCompatPreferenceActivity {
                     return true;
                 }
             });
+
         }
     }
 
@@ -100,7 +105,6 @@ public class SettingsPrefActivity extends AppCompatPreferenceActivity {
 
     private static void bindPreferenceSummaryToValue(Preference preference) {
         preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
-
         sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
                 PreferenceManager
                         .getDefaultSharedPreferences(preference.getContext())
@@ -116,19 +120,6 @@ public class SettingsPrefActivity extends AppCompatPreferenceActivity {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             String stringValue = newValue.toString();
 
-//            if (preference instanceof ListPreference) {
-//                // For list preferences, look up the correct display value in
-//                // the preference's 'entries' list.
-//                ListPreference listPreference = (ListPreference) preference;
-//                int index = listPreference.findIndexOfValue(stringValue);
-//
-//                // Set the summary to reflect the new value.
-//                preference.setSummary(
-//                        index >= 0
-//                                ? listPreference.getEntries()[index]
-//                                : null);
-//
-//            } else
             if (preference instanceof RingtonePreference) {
                 // For ringtone preferences, look up the correct display value
                 // using RingtoneManager.
@@ -154,10 +145,20 @@ public class SettingsPrefActivity extends AppCompatPreferenceActivity {
             }
             else if (preference instanceof EditTextPreference) {
                 if (preference.getKey().equals("key_user_name")) {
-                    // change userName in db
-
-                    accountInfoChange obj = new accountInfoChange("userName", stringValue, useremail);
+                    if(!stringValue.equals("") && !stringValue.equals(username)){
+                    accountInfoChange obj = new accountInfoChange(context, "userName", stringValue, useremail);
+                    obj.execute();
                     preference.setSummary(stringValue);
+                    }
+
+                }
+                else if (preference.getKey().equals("key_user_pass")){
+                    Log.d("test7", "password field Pressed"+stringValue+"=Password");
+                    if(!stringValue.equals("")){
+                        accountInfoChange obj = new accountInfoChange(context, "userPass", stringValue, useremail);
+                        obj.execute();
+                    }
+
                 }
             }
             else {
@@ -167,11 +168,7 @@ public class SettingsPrefActivity extends AppCompatPreferenceActivity {
         }
     };
 
-    /**
-     * Email client intent to send support mail
-     * Appends the necessary device information to email body
-     * useful when providing support
-     */
+
     public static void sendFeedback(Context context) {
         String body = null;
         try {
@@ -183,7 +180,7 @@ public class SettingsPrefActivity extends AppCompatPreferenceActivity {
         }
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("message/rfc822");
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"contact@androidhive.info"});
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"rocking.coders1@gmail.com"});
         intent.putExtra(Intent.EXTRA_SUBJECT, "Query from android app");
         intent.putExtra(Intent.EXTRA_TEXT, body);
         context.startActivity(Intent.createChooser(intent, context.getString(R.string.choose_email_client)));

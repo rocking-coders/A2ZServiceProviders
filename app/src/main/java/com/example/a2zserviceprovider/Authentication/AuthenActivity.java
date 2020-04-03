@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.a2zserviceprovider.R;
 import com.example.a2zserviceprovider.SettingFragment;
+import com.example.a2zserviceprovider.SettingsPrefActivity;
 import com.google.android.material.navigation.NavigationView;
 
 public class AuthenActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -70,8 +71,6 @@ public class AuthenActivity extends AppCompatActivity implements NavigationView.
                 navigationView.setCheckedItem(R.id.nav_signUp);
             }
         }
-
-
     }
 
     @Override
@@ -81,8 +80,8 @@ public class AuthenActivity extends AppCompatActivity implements NavigationView.
                 finish();
                 break;
             case R.id.nav_setting:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_authen, new SettingFragment()).commit();
-                navigationView.setCheckedItem(R.id.nav_setting);
+                Intent settings = new Intent(this, SettingsPrefActivity.class);
+                startActivity(settings);
                 break;
             case R.id.nav_signIn:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_authen, new SignInFragment()).commit();
