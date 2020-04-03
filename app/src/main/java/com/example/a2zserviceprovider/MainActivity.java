@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private View view;
+    private SharedPreferences sharedPreferences;
+    String username, useremail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
+
+        Log.d("test6", "MainAcitivity::onCreate()");
 
         drawer = findViewById(R.id.drawer_layout1);
         navigationView = findViewById(R.id.nav_view1);
@@ -48,9 +52,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.d("status", "Not logged in");
 
         //changing Navigation buttons and updating name of user
-        SharedPreferences sharedPreferences = getSharedPreferences("Login Data", Context.MODE_PRIVATE);
-        String username = sharedPreferences.getString("username", "");
-        String useremail = sharedPreferences.getString("UserEmail", "");
+        sharedPreferences = getSharedPreferences("Login Data", Context.MODE_PRIVATE);
+        username = sharedPreferences.getString("username", "");
+        useremail = sharedPreferences.getString("UserEmail", "");
         Log.d("Username", username);
 
         //upating UI
@@ -84,6 +88,45 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
+    protected void onResume() {
+        Log.d("test6", "MainActivity::onResume()");
+
+        //updating user name if changed in settings
+        TextView textView1 = view.findViewById(R.id.username);
+        String curr_userName = sharedPreferences.getString("username", "");
+        if(!textView1.toString().equals(curr_userName)) {
+            textView1.setText(curr_userName);
+            username = curr_userName;
+        }
+        navigationView.setCheckedItem(R.id.nav_home);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.d("test6", "MainAcitivity::onPause()");
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.d("test6", "MainAcitivity::onStop()");
+        super.onStop();
+    }
+
+    @Override
+    protected void onRestart() {
+        Log.d("test6", "MainAcitivity::onRestart()");
+        super.onRestart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d("test6", "MainAcitivity::onDestroy()");
+        super.onDestroy();
+    }
+
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_home: {
@@ -98,10 +141,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             }
             case R.id.nav_setting: {
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container1, new SettingFragment()).commit();
-//                navigationView.setCheckedItem(R.id.nav_setting);
                 Intent settings = new Intent(this, SettingsPrefActivity.class);
                 startActivity(settings);
+                Log.d("test6", "MainActivity::onNavigationListener");
                 break;
             }
             case R.id.nav_signIn: {
@@ -141,6 +183,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
+        Log.d("test6", "MainAcitivity::onBackPressed");
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {

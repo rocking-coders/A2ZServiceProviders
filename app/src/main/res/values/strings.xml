@@ -49,9 +49,9 @@
         <string name="key_vibrate">key_vibrate</string>
         <string name="key_send_feedback">key_send_feedback</string>
         <string name="key_username">key_user_name</string>
-    <string name="key_category_gen">General</string>
-    <string name="key_useremail">key_user_email</string>
-    <string name="key_userpass">key_user_pass</string>
+        <string name="key_category_gen">General</string>
+        <string name="key_useremail">key_user_email</string>
+        <string name="key_userpass">key_user_pass</string>
 
 
 </resources>
