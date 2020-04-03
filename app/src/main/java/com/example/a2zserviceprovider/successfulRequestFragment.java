@@ -16,7 +16,7 @@ public class successfulRequestFragment extends Fragment {
 
     Context context;
 
-    successfulRequestFragment(Context context){
+    public successfulRequestFragment(Context context){
         this.context = context;
     }
 

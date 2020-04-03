@@ -1,4 +1,4 @@
-package com.example.a2zserviceprovider;
+package com.example.a2zserviceprovider.ACRepair;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -10,18 +10,19 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.a2zserviceprovider.Authentication.AuthenActivity;
+import com.example.a2zserviceprovider.MainActivity;
+import com.example.a2zserviceprovider.R;
+import com.example.a2zserviceprovider.SettingFragment;
+import com.example.a2zserviceprovider.BackgroundWorkers.fetchTotalServicesBW;
 import com.google.android.material.navigation.NavigationView;
 
 public class AcRepairActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -48,20 +49,31 @@ public class AcRepairActivity extends AppCompatActivity implements NavigationVie
         //changing Navigation buttons if logged in
         SharedPreferences sharedPreferences = getSharedPreferences("Login Data", Context.MODE_PRIVATE);
         String username = sharedPreferences.getString("username","");
+        String useremail = sharedPreferences.getString("UserEmail", "");
         Log.d("Username",username);
         Menu menu = navigationView.getMenu();
-        if(!username.equals("")){
-            Log.d("status","Logged In");
+
+        view = navigationView.getHeaderView(0);
+        TextView textView1 = view.findViewById(R.id.username);
+        TextView textView2 = view.findViewById(R.id.useremail);
+
+        //if user is signed in
+        if (!username.equals("")) {
+            Log.d("status", "Logged In");
+            //making sign in and sign up invisible
             menu.findItem(R.id.nav_signIn).setVisible(false);
             menu.findItem(R.id.nav_signUp).setVisible(false);
-            view = navigationView.getHeaderView(0);
-            TextView textView = view.findViewById(R.id.username);
-            textView.setText(username);
-        }
-        else{
+
+            //updating user image and email
+            textView1.setText(username);
+            textView2.setText(useremail);
+        } else {
             menu.findItem(R.id.nav_logout).setVisible(false);
             menu.findItem(R.id.nav_services).setVisible(false);
+            textView1.setVisibility(View.INVISIBLE);
+            textView2.setVisibility(View.INVISIBLE);
         }
+
         if (savedInstanceState == null) {
             //first fragment to be opened - homeFragment along with highlighted
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container2, new AcRepairFragment()).commit();

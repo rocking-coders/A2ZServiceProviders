@@ -1,4 +1,4 @@
-package com.example.a2zserviceprovider;
+package com.example.a2zserviceprovider.BackgroundWorkers;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,6 +11,9 @@ import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+
+import com.example.a2zserviceprovider.R;
+import com.example.a2zserviceprovider.successfulRequestFragment;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -30,9 +33,11 @@ public class serviceRequest extends AsyncTask<String, Void, String> {
     ProgressDialog progressDialog;
     AlertDialog alertDialog;
     Context context;
+    String serviceType;
 
-    serviceRequest(Context ctx){
+    public serviceRequest(Context ctx, String sT){
         context = ctx;
+        serviceType = sT;
     }
 
     private void showDialog() {
@@ -59,7 +64,6 @@ public class serviceRequest extends AsyncTask<String, Void, String> {
         String result="";
         String technicianName = args[1];
         String technicianEmail = args[0];
-        String serviceType = args[2];
         SharedPreferences sharedPreferences = context.getSharedPreferences("Login Data", Context.MODE_PRIVATE);
         String username = sharedPreferences.getString("username","");
         String useremail = sharedPreferences.getString("UserEmail","");
@@ -118,9 +122,12 @@ public class serviceRequest extends AsyncTask<String, Void, String> {
             Fragment f = new successfulRequestFragment(context);
             Activity activity = (Activity) context;
             FragmentActivity fragmentActivity = (FragmentActivity) activity;
-            fragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container2, f).commit();
-            //getSupportFragmentManager operates on fragmentActivity object
-            //transacting from one fragment to another fragment is done like this
+            if(serviceType.equals("AcRepair")) {
+                fragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container2, f).commit();
+            }
+            else if(serviceType.equals("Plumber")){
+                fragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_plumber, f).commit();
+            }
         }
         else {
             alertDialog.setMessage("Something went wrong! Please Try Again");

@@ -1,4 +1,4 @@
-package com.example.a2zserviceprovider;
+package com.example.a2zserviceprovider.Authentication;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -27,6 +27,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.a2zserviceprovider.MainActivity;
+import com.example.a2zserviceprovider.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;
@@ -157,7 +159,7 @@ public class SignInFragment extends Fragment {
                 editor.putString("username",aVoid);
                 editor.putString("UserEmail",email);
                 editor.commit();
-                Intent i = new Intent(ctx,MainActivity.class);
+                Intent i = new Intent(ctx, MainActivity.class);
                 //getActivity().finish();
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);

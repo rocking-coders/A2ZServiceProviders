@@ -26,15 +26,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AcRepairActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".ACRepair.AcRepairActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".PlumberActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".Plumber.PlumberActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AuthenActivity"
+            android:name=".Authentication.AuthenActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:noHistory="true"></activity>
+            android:noHistory="true" />
+        <activity
+            android:name=".SettingsPrefActivity" />
     </application>
 
 </manifest>

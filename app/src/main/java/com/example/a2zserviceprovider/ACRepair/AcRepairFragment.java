@@ -1,20 +1,12 @@
-package com.example.a2zserviceprovider;
+package com.example.a2zserviceprovider.ACRepair;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Looper;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,18 +22,9 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
-import com.google.android.gms.common.internal.Constants;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
+import com.example.a2zserviceprovider.R;
+import com.example.a2zserviceprovider.BackgroundWorkers.locationFind;
 
 public class AcRepairFragment extends Fragment {
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
@@ -85,7 +68,7 @@ public class AcRepairFragment extends Fragment {
                     SharedPreferences preferences = ctx.getSharedPreferences("services Data",Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("problem_specification",problem);
-                    editor.commit();
+                    editor.apply();
                     Log.d("test1", "Assigning a background worker ");
                     locationFind obj = new locationFind(getActivity(), "AcRepair");
                     obj.locationGet("AC Mechanic");
