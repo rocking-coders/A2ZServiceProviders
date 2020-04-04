@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.a2zserviceprovider.R;
@@ -48,8 +49,14 @@ public class AuthenActivity extends AppCompatActivity implements NavigationView.
         view = navigationView.getHeaderView(0);
         TextView textView1 = view.findViewById(R.id.username);
         TextView textView2 = view.findViewById(R.id.useremail);
+        ImageView imgProfile = view.findViewById(R.id.img_profile);
+        ImageView imgPlus = view.findViewById(R.id.img_plus);
+
+        //hiding all texview and image in nav_header
         textView1.setVisibility(View.INVISIBLE);
         textView2.setVisibility(View.INVISIBLE);
+        imgProfile.setVisibility(View.INVISIBLE);
+        imgPlus.setVisibility(View.INVISIBLE);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
