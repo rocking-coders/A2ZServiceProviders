@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
 
 import androidx.fragment.app.Fragment;
@@ -26,7 +25,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 
 public class serviceRequest extends AsyncTask<String, Void, String> {
 
@@ -127,6 +125,12 @@ public class serviceRequest extends AsyncTask<String, Void, String> {
             }
             else if(serviceType.equals("Plumber")){
                 fragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_plumber, f).commit();
+            }
+            else if(serviceType.equals("Painter")){
+                fragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_painter, f).commit();
+            }
+            else if(serviceType.equals("Carpenter")){
+                fragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_carpenter, f).commit();
             }
         }
         else {

@@ -1,4 +1,4 @@
-package com.example.a2zserviceprovider.Plumber;
+package com.example.a2zserviceprovider.Carpenter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,7 +25,7 @@ import com.example.a2zserviceprovider.R;
 import com.example.a2zserviceprovider.SettingsPrefActivity;
 import com.google.android.material.navigation.NavigationView;
 
-public class PlumberActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class CarpenterActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
     private View view;
@@ -36,13 +36,13 @@ public class PlumberActivity extends AppCompatActivity implements NavigationView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_plumber);
+        setContentView(R.layout.activity_carpenter);
 
-        Toolbar toolbar = findViewById(R.id.toolbar_plumber);
+        Toolbar toolbar = findViewById(R.id.toolbar_carpenter);
         setSupportActionBar(toolbar);
 
-        drawer = findViewById(R.id.drawer_layout_plumber);
-        navigationView = findViewById(R.id.nav_view_plumber);
+        drawer = findViewById(R.id.drawer_layout_carpenter);
+        navigationView = findViewById(R.id.nav_view_carpenter);
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -80,7 +80,7 @@ public class PlumberActivity extends AppCompatActivity implements NavigationView
 
         if (savedInstanceState == null) {
             //first fragment to be opened - homeFragment along with highlighted
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_plumber, new PlumberFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_carpenter, new CarpenterFragment()).commit();
         }
     }
 
@@ -106,7 +106,7 @@ public class PlumberActivity extends AppCompatActivity implements NavigationView
                 finish();
                 break;
             case R.id.nav_services:
-                fetchTotalServicesBW bw = new fetchTotalServicesBW(this, "Plumber");
+                fetchTotalServicesBW bw = new fetchTotalServicesBW(this, "Carpenter");
                 bw.execute();
                 navigationView.setCheckedItem(R.id.nav_services);
                 break;
@@ -141,7 +141,7 @@ public class PlumberActivity extends AppCompatActivity implements NavigationView
                 Toast.makeText(this, "Feedback", Toast.LENGTH_SHORT).show();
                 break;
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_plumber);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_carpenter);
         drawer.closeDrawer(GravityCompat.START);
         return true;
 
