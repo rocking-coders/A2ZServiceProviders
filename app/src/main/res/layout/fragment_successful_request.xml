@@ -5,15 +5,47 @@
     android:id="@+id/plumber_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".successfulRequestFragment">
+    tools:context=".successfulRequestFragment"
+    android:background="@drawable/gradient">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="Background effect"
+        android:src="@drawable/mobile_call"/>
 
     <TextView
         android:id="@+id/TVsuccessfulRequest"
-        android:layout_width="201dp"
-        android:layout_height="49dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="20dp"
         android:text=""
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        tools:ignore="MissingConstraints">
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_home"
+            android:id="@+id/home"
+            android:contentDescription="Background effect" />
+
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
