@@ -38,6 +38,7 @@
             app:civ_shadow_radius="1" />
     </RelativeLayout>
 
+
     <TextView
         android:id="@+id/username"
         android:layout_width="wrap_content"
@@ -49,12 +50,15 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/profile_title" />
 
+
     <TextView
         android:id="@+id/useremail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:fontFamily="@string/font_family_medium"
         android:text="name@email.com"
         android:textColor="@android:color/white"
         android:textSize="13dp" />
+
 </LinearLayout>

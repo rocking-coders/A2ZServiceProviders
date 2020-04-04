@@ -2,11 +2,11 @@
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout2"
+    android:id="@+id/drawer_layout_painter"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ACRepair.AcRepairActivity"
+    tools:context=".Painter.PainterActivity"
     tools:openDrawer="start">
     <!--openDrawer="start" shows the drawer in blueprint -->
     <LinearLayout
@@ -15,22 +15,22 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar2"
+            android:id="@+id/toolbar_painter"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorPrimary"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         <FrameLayout
-            android:id="@+id/fragment_container2"
+            android:id="@+id/fragment_container_painter"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view2"
+        android:id="@+id/nav_view_painter"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"

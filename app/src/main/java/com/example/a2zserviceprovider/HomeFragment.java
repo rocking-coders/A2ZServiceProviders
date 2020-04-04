@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.a2zserviceprovider.ACRepair.AcRepairActivity;
+import com.example.a2zserviceprovider.Carpenter.CarpenterActivity;
+import com.example.a2zserviceprovider.Painter.PainterActivity;
 import com.example.a2zserviceprovider.Plumber.PlumberActivity;
 
 public class HomeFragment extends Fragment implements View.OnClickListener{
@@ -27,6 +29,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         button_plumber.setOnClickListener(this);
         button_painter = root.findViewById(R.id.painter);
         button_painter.setOnClickListener(this);
+        button_carpenter = root.findViewById(R.id.carpenter);
+        button_carpenter.setOnClickListener(this);
 
         return root;
     }
@@ -46,8 +50,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             }
             case R.id.painter:
             {
-                //DatabaseReference mRef = database.getReference("Name");
-                //mRef.setValue("Deepak");
+                Intent intent_painter = new Intent(getContext(), PainterActivity.class);
+                startActivity(intent_painter);
+
+            }
+            case R.id.carpenter:
+            {
+                Intent intent_carpenter = new Intent(getContext(), CarpenterActivity.class);
+                startActivity(intent_carpenter);
 
             }
         }

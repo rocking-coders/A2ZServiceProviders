@@ -20,6 +20,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexWarning"
         tools:targetApi="m">
+
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -36,10 +37,10 @@
             android:name=".Plumber.PlumberActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Authentication.AuthenActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:noHistory="true" />
+            android:name=".Painter.PainterActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
+
             android:name=".SettingsPrefActivity" />
 
         <activity android:name=".ImagePickerActivity" />
@@ -61,6 +62,15 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+            android:name=".Carpenter.CarpenterActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Authentication.AuthenActivity"
+            android:noHistory="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".SettingsPrefActivity" />
+
     </application>
 
 </manifest>

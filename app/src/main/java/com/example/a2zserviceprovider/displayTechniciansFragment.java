@@ -1,14 +1,20 @@
 package com.example.a2zserviceprovider;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +30,7 @@ public class displayTechniciansFragment extends Fragment implements View.OnClick
     Button Bsubmit;
     String technicianName, technicianEmail;
     String serviceType;
+
 
     @Nullable
     @Override
@@ -92,7 +99,6 @@ public class displayTechniciansFragment extends Fragment implements View.OnClick
 
         return root;
     }
-
     @Override
     public void onClick(View v) {
         serviceRequest makeRequest = new serviceRequest(getActivity(), serviceType);
