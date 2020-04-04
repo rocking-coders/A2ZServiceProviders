@@ -23,12 +23,16 @@ import com.example.a2zserviceprovider.MainActivity;
 import com.example.a2zserviceprovider.R;
 import com.example.a2zserviceprovider.SettingFragment;
 import com.example.a2zserviceprovider.BackgroundWorkers.fetchTotalServicesBW;
+import com.example.a2zserviceprovider.SettingsPrefActivity;
 import com.google.android.material.navigation.NavigationView;
 
 public class AcRepairActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     private View view;
-    private  NavigationView navigationView;
+    private NavigationView navigationView;
+    private SharedPreferences sharedPreferences;
+    String username, useremail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +51,10 @@ public class AcRepairActivity extends AppCompatActivity implements NavigationVie
         toggle.syncState();
 
         //changing Navigation buttons if logged in
-        SharedPreferences sharedPreferences = getSharedPreferences("Login Data", Context.MODE_PRIVATE);
-        String username = sharedPreferences.getString("username","");
-        String useremail = sharedPreferences.getString("UserEmail", "");
-        Log.d("Username",username);
+        sharedPreferences = getSharedPreferences("Login Data", Context.MODE_PRIVATE);
+        username = sharedPreferences.getString("username", "");
+        useremail = sharedPreferences.getString("UserEmail", "");
+        Log.d("Username", username);
         Menu menu = navigationView.getMenu();
 
         view = navigationView.getHeaderView(0);
@@ -81,6 +85,20 @@ public class AcRepairActivity extends AppCompatActivity implements NavigationVie
     }
 
     @Override
+    protected void onResume() {
+        TextView textView1 = view.findViewById(R.id.username);
+        String curr_userName = sharedPreferences.getString("username", "");
+        if (!textView1.toString().equals(curr_userName)) {
+            textView1.setText(curr_userName);
+            username = curr_userName;
+            Log.d("test6", "userName is updated");
+        }
+        Log.d("test6", "MainAcitivity::onResume()");
+        super.onResume();
+    }
+
+
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_home:
@@ -93,7 +111,8 @@ public class AcRepairActivity extends AppCompatActivity implements NavigationVie
                 navigationView.setCheckedItem(R.id.nav_services);
                 break;
             case R.id.nav_setting:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container2, new SettingFragment()).commit();
+                Intent settings = new Intent(this, SettingsPrefActivity.class);
+                startActivity(settings);
                 break;
             case R.id.nav_signIn:
                 Intent intent_signin = new Intent(this, AuthenActivity.class);
@@ -136,15 +155,4 @@ public class AcRepairActivity extends AppCompatActivity implements NavigationVie
             super.onBackPressed();
         }
     }
-
-    /*
-    public void OpenSignupPage(View view) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container2, new SignUpFragment()).commit();
-    }
-    public void OpenSigninPage(View view)
-    {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container2,new SignInFragment()).commit();
-    }
-
-     */
 }

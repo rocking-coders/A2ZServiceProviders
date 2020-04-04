@@ -3,6 +3,7 @@ package com.example.a2zserviceprovider;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.util.Log;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +24,21 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("test6", "AppCompatPreferenceActivity::onCreate()");
         getDelegate().installViewFactory();
         getDelegate().onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
     }
 
     @Override
+    public void onBackPressed() {
+        Log.d("test6", "AppCompatPreferenceActivity::onBackPressed()");
+        super.onBackPressed();
+    }
+
+    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
+        Log.d("test6", "AppCompatPreferenceActivity::onPost()");
         super.onPostCreate(savedInstanceState);
         getDelegate().onPostCreate(savedInstanceState);
     }
@@ -69,6 +78,7 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
 
     @Override
     protected void onPostResume() {
+        Log.d("test6", "AppCompatPreferenceActivity::onPostResume()");
         super.onPostResume();
         getDelegate().onPostResume();
     }
@@ -81,18 +91,21 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
+        Log.d("test6", "AppCompatPreferenceActivity::onConfigurationChanged()");
         super.onConfigurationChanged(newConfig);
         getDelegate().onConfigurationChanged(newConfig);
     }
 
     @Override
     protected void onStop() {
+        Log.d("test6", "AppCompatPreferenceActivity::onStop()");
         super.onStop();
         getDelegate().onStop();
     }
 
     @Override
     protected void onDestroy() {
+        Log.d("test6", "AppCompatPreferenceActivity::onDestroy()");
         super.onDestroy();
         getDelegate().onDestroy();
     }
