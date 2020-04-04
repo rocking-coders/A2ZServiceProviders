@@ -133,5 +133,11 @@ public class findTechnician extends AsyncTask<String, Void, ArrayList<String> > 
         else if(serviceType.equals("Plumber")){
             fragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_plumber, f).commit();
         }
+        else if(serviceType.equals("Painter")){
+            fragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_painter, f).commit();
+        }
+        else if(serviceType.equals("Carpenter")){
+            fragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_carpenter, f).commit();
+        }
     }
 }

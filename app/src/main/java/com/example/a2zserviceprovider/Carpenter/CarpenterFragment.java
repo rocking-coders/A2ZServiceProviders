@@ -1,4 +1,4 @@
-package com.example.a2zserviceprovider.Plumber;
+package com.example.a2zserviceprovider.Carpenter;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -26,7 +26,12 @@ import androidx.fragment.app.Fragment;
 import com.example.a2zserviceprovider.BackgroundWorkers.locationFind;
 import com.example.a2zserviceprovider.R;
 
-public class PlumberFragment extends Fragment {
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link CarpenterFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class CarpenterFragment extends Fragment {
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
     ProgressDialog progressDialog;
     private TextView textLatLong;
@@ -35,7 +40,7 @@ public class PlumberFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_plumber, container, false);
+        View root = inflater.inflate(R.layout.fragment_carpenter, container, false);
         ctx = getActivity();
         final EditText problem_detail = root.findViewById(R.id.problemText);
 
@@ -70,8 +75,8 @@ public class PlumberFragment extends Fragment {
                     editor.putString("problem_specification",problem);
                     editor.apply();
                     Log.d("test1", "Assigning a background worker ");
-                    locationFind obj = new locationFind(getActivity(), "Plumber");
-                    obj.locationGet("Plumber");
+                    locationFind obj = new locationFind(getActivity(), "Carpenter");
+                    obj.locationGet("Carpenter");
                 }
             }
         });

@@ -4,4 +4,6 @@
     <color name="colorPrimary">#00574B</color>
     <color name="colorDark">#000000</color>
     <color name="darkPrimary">#008577</color>
+    <color name="darkRed">#FF0000</color>
+
 </resources>
