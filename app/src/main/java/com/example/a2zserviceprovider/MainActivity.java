@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //disabling all elements that are not needed.
             //imgProfile.setVisibility(View.INVISIBLE);
             imgPlus.setVisibility(View.INVISIBLE);
-            loadProfileDefault(R.drawable.ic_android_black_24dp);
+            loadProfileDefault(R.drawable.ic_android_a2z_512x512);
 
             menu.findItem(R.id.nav_logout).setVisible(false);
             menu.findItem(R.id.nav_services).setVisible(false);
@@ -256,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void loadProfileDefault(int drawable) {
         GlideApp.with(this).load(drawable)
                 .into(imgProfile);
-        imgProfile.setColorFilter(ContextCompat.getColor(this, R.color.profile_default_tint));
+        imgProfile.setColorFilter(ContextCompat.getColor(this, android.R.color.transparent));
     }
 
 
