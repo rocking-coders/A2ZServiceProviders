@@ -1,6 +1,7 @@
 package com.example.a2zserviceprovider;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,6 +25,7 @@ import com.example.a2zserviceprovider.BackgroundWorkers.accountInfoChange;
 
 import java.util.Map;
 
+@SuppressWarnings("ALL")
 public class SettingsPrefActivity extends AppCompatPreferenceActivity {
     private static final String TAG = SettingsPrefActivity.class.getSimpleName();
     private static String username, useremail;
@@ -144,19 +146,32 @@ public class SettingsPrefActivity extends AppCompatPreferenceActivity {
 
             }
             else if (preference instanceof EditTextPreference) {
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setTitle("Error");
+                alertDialog.setMessage("No Internet Connection");
                 if (preference.getKey().equals("key_user_name")) {
-                    if(!stringValue.equals("") && !stringValue.equals(username)){
-                    accountInfoChange obj = new accountInfoChange(context, "userName", stringValue, useremail);
-                    obj.execute();
-                    preference.setSummary(stringValue);
+                    if(!stringValue.equals("") && !stringValue.equals(username)) {
+                        accountInfoChange obj = new accountInfoChange(context, "userName", stringValue, useremail);
+                        if (obj.internet_connection()) {
+                            obj.execute();
+                            preference.setSummary(stringValue);
+                        }
+                        else{
+                            alertDialog.show();
+                        }
                     }
-
                 }
                 else if (preference.getKey().equals("key_user_pass")){
                     Log.d("test7", "password field Pressed"+stringValue+"=Password");
                     if(!stringValue.equals("")){
                         accountInfoChange obj = new accountInfoChange(context, "userPass", stringValue, useremail);
-                        obj.execute();
+                        if (obj.internet_connection()) {
+                            obj.execute();
+                            preference.setSummary(stringValue);
+                        }
+                        else{
+                            alertDialog.show();
+                        }
                     }
 
                 }

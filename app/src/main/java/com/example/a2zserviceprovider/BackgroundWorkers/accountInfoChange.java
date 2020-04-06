@@ -6,6 +6,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -143,4 +145,15 @@ public class accountInfoChange extends AsyncTask<Void, Void, String> {
             }
         }
     }
+    public boolean internet_connection(){
+        //Check if connected to internet, output accordingly
+        ConnectivityManager cm =
+                (ConnectivityManager)this.context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return isConnected;
+    }
+
 }

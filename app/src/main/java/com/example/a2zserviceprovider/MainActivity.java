@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -32,6 +34,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.a2zserviceprovider.Authentication.AuthenActivity;
 import com.example.a2zserviceprovider.BackgroundWorkers.fetchTotalServicesBW;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -61,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        boolean result = isNetworkAvailable();
+        Log.d("network", String.valueOf(result));
         url = null;
 
         Toolbar toolbar = findViewById(R.id.toolbar1);
@@ -144,9 +149,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             }
             case R.id.nav_services: {
-                fetchTotalServicesBW bw = new fetchTotalServicesBW(this, "MainActivity");
-                bw.execute();
-                navigationView.setCheckedItem(R.id.nav_services);
+                if(isNetworkAvailable()) {
+                    fetchTotalServicesBW bw = new fetchTotalServicesBW(this, "MainActivity");
+                    bw.execute();
+                    navigationView.setCheckedItem(R.id.nav_services);
+                }
                 break;
             }
             case R.id.nav_setting: {
@@ -179,9 +186,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             case R.id.nav_share:
                 Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.nav_feedback:
-                Toast.makeText(this, "Feedback", Toast.LENGTH_SHORT).show();
                 break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout1);
@@ -368,6 +372,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Uri uri = Uri.fromParts("package", getPackageName(), null);
         intent.setData(uri);
         startActivityForResult(intent, 101);
+    }
+
+    private boolean isNetworkAvailable() {
+        final boolean[] flag = new boolean[1];
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
+            flag[0] = true;
+        } else {
+            final Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
+                    "No internet connection.",
+                    Snackbar.LENGTH_SHORT);
+            snackbar.setActionTextColor(ContextCompat.getColor(getApplicationContext(),
+                    R.color.lime));
+            snackbar.setAction("Try Again", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //recheck internet connection and call DownloadJson if there is internet
+                    if(activeNetworkInfo != null && activeNetworkInfo.isConnected()){
+                        flag[0] = true;
+                    }
+                    else{
+                        flag[0] = false;
+                    }
+                }
+            }).show();
+        }
+        return flag[0];
     }
 
 }

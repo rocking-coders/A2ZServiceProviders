@@ -91,9 +91,9 @@ public class locationFind {
                                 errorMessage = exception.getMessage();
                             }
                             if (addresses == null || addresses.isEmpty()) {
-                                //could not able to fetch address from longitude and latitude
-                                //then we have to take address manually
-                                //Code it here
+                                alertDialog.setMessage("Something went Wrong");
+                                hideDialog();
+                                alertDialog.show();
                                 Log.d("test1", errorMessage);
                             } else {
                                 //we got the address
@@ -113,10 +113,10 @@ public class locationFind {
                                 SharedPreferences preferences = context.getSharedPreferences("services Data",Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = preferences.edit();
                                 editor.putString("serviceLocation",geoaddress);
-                                editor.commit();
+                                editor.apply();
 
                                 int h = geoaddress.lastIndexOf(',');
-                                String pincode = geoaddress.substring(h - 5, h);
+                                String pincode = geoaddress.substring(h - 6, h);
                                 Log.d("test1", "locationFind:: " + pincode);
                                 findTechnician obj = new findTechnician(context, serviceType);
                                 obj.execute(pincode,technicianType);

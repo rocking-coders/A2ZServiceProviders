@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,10 +46,16 @@ public class AcRepairFragment extends Fragment {
 
         TextView warning_message = root.findViewById(R.id.submit_warning);
         Button submit_button = root.findViewById(R.id.buttonGetCurrentLocation);
-        if(!username.equals("")){
+        if(!username.equals("") && internet_connection()){
             warning_message.setVisibility(View.INVISIBLE);
         }
         else{
+            if(username.equals("")) {
+                warning_message.setText("Please Sign In first");
+                }
+            else{
+                warning_message.setText("No Internet");
+            }
             submit_button.setEnabled(false);
         }
 
@@ -90,5 +98,17 @@ public class AcRepairFragment extends Fragment {
             }
         }
     }
+
+    boolean internet_connection(){
+        //Check if connected to internet, output accordingly
+        ConnectivityManager cm =
+                (ConnectivityManager)this.ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return isConnected;
+    }
+
 
 }

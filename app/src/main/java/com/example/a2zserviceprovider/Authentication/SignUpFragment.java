@@ -3,6 +3,8 @@ package com.example.a2zserviceprovider.Authentication;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -54,14 +56,40 @@ public class SignUpFragment extends Fragment {
                 String name = ETname.getText().toString();
                 String email = ETemail.getText().toString();
                 String password = ETpassword.getText().toString();
-                SignUpFragment.backgroundWorker bW = new SignUpFragment.backgroundWorker(getActivity());
-                bW.execute(email,password,name);
-                Log.d("message","On sign Up fragment");
+                boolean connection = internet_connection();
+                if(!name.equals("") && !email.equals("") && !password.equals("") && connection) {
+                    SignUpFragment.backgroundWorker bW = new SignUpFragment.backgroundWorker(getActivity());
+                    bW.execute(email, password, name);
+                    Log.d("message", "On sign Up fragment");
+                }
+                else{
+                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                    alertDialog.setTitle("Error");
+                    if(connection) {
+                        alertDialog.setMessage("Fill all credentials");
+                    }
+                    else{
+                        alertDialog.setMessage("No Internet");
+                    }
+                    alertDialog.show();
+                }
             }
         });
 
         return root;
     }
+
+    boolean internet_connection(){
+        //Check if connected to internet, output accordingly
+        ConnectivityManager cm =
+                (ConnectivityManager)this.ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return isConnected;
+    }
+
 
     class backgroundWorker extends AsyncTask<String,Void,String> {
 

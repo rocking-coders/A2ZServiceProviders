@@ -10,15 +10,15 @@
             android:title="Home" />
         <item
             android:id="@+id/nav_signIn"
-            android:icon="@drawable/ic_home"
+            android:icon="@drawable/ic_person"
             android:title="Sign In" />
         <item
             android:id="@+id/nav_signUp"
-            android:icon="@drawable/ic_home"
+            android:icon="@drawable/ic_person"
             android:title="Sign Up" />
         <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_home"
+            android:icon="@drawable/ic_logout"
             android:title="Log Out" />
 
         <item
@@ -36,10 +36,6 @@
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_share"
                 android:title="Share" />
-            <item
-                android:id="@+id/nav_feedback"
-                android:icon="@drawable/ic_feedback"
-                android:title="Feedback" />
         </menu>
     </item>
 </menu>

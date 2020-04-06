@@ -1,6 +1,7 @@
 package com.example.a2zserviceprovider;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,28 +51,40 @@ public class displayTechniciansFragment extends Fragment implements View.OnClick
         TextView textView = root.findViewById(R.id.tnoTechnician);
         Bsubmit = root.findViewById(R.id.buttonRequest);
         Bsubmit.setOnClickListener(this);
+        Log.d("debug", String.valueOf(technicians.size()));
         if (technicians.size() == 1) {
-            if (technicians.get(0) == "null") {
+            //clearing services data cache
+            SharedPreferences preferences = getActivity().getSharedPreferences("services Data",Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.clear();
+            editor.apply();
+
                 Bsubmit.setVisibility(View.INVISIBLE);
                 t1.setVisibility(View.INVISIBLE);
                 t2.setVisibility(View.INVISIBLE);
                 t3.setVisibility(View.INVISIBLE);
                 textView.setText("Sorry! No technician found nearby");
-            } else {
-                textView.setVisibility(View.INVISIBLE);
-                t1.setText(technicians.get(0));
-                t2.setVisibility(View.INVISIBLE);
-                t3.setVisibility(View.INVISIBLE);
             }
-        } else {
-            textView.setVisibility(View.INVISIBLE);
-            t1.setText(technicians.get(0));
-            t2.setText(technicians.get(2));
-            if (technicians.size() == 2) {
-                t3.setVisibility(View.INVISIBLE);
-            } else {
-                t3.setText(technicians.get(4));
-            }
+            else {
+                    textView.setVisibility(View.INVISIBLE);
+                    if(technicians.size()==2)
+                    {
+                        t1.setText(technicians.get(0));
+                        t2.setVisibility(View.INVISIBLE);
+                        t3.setVisibility(View.INVISIBLE);
+                    }
+                    else if(technicians.size()==4)
+                    {
+                        t1.setText(technicians.get(0));
+                        t2.setText(technicians.get(2));
+                        t3.setVisibility(View.INVISIBLE);
+                    }
+                    else
+                    {
+                        t1.setText(technicians.get(0));
+                        t2.setText(technicians.get(2));
+                        t3.setText(technicians.get(4));
+                    }
         }
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

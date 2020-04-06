@@ -137,9 +137,6 @@ public class PlumberActivity extends AppCompatActivity implements NavigationView
             case R.id.nav_share:
                 Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.nav_feedback:
-                Toast.makeText(this, "Feedback", Toast.LENGTH_SHORT).show();
-                break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_plumber);
         drawer.closeDrawer(GravityCompat.START);

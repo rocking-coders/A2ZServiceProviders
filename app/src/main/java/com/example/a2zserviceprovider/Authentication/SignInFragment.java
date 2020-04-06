@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -30,6 +32,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.a2zserviceprovider.MainActivity;
 import com.example.a2zserviceprovider.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -71,13 +74,38 @@ public class SignInFragment extends Fragment {
             public void onClick(View v) {
                 email = ETemail.getText().toString();
                 String password = ETpassword.getText().toString();
-                backgroundWorker bW = new backgroundWorker(getActivity());
-                bW.execute(email,password);
-                Log.d("message","On sign In fragment");
+                boolean connection = internet_connection();
+                Log.d("network", email+password+connection);
+                if (!email.equals("") && !password.equals("") && connection) {
+                    backgroundWorker bW = new backgroundWorker(getActivity());
+                    bW.execute(email, password);
+                    Log.d("message", "On sign In fragment");
+                } else {
+                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                    alertDialog.setTitle("Error");
+                    if(connection) {
+                        alertDialog.setMessage("Fill all credentials");
+                    }
+                    else{
+                        alertDialog.setMessage("No Internet");
+                    }
+                    alertDialog.show();
+                }
             }
         });
 
         return root;
+    }
+
+    boolean internet_connection(){
+        //Check if connected to internet, output accordingly
+        ConnectivityManager cm =
+                (ConnectivityManager)this.ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return isConnected;
     }
 
 //this class is for doing background processing like showing dialog box and connecting to dB etc.

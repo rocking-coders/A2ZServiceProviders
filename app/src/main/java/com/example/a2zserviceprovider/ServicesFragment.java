@@ -2,6 +2,7 @@ package com.example.a2zserviceprovider;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,20 +38,20 @@ public class ServicesFragment extends Fragment {
         this.getArguments().remove("Services Offered");
 
         linearLayout = root.findViewById(R.id.fragment_services);
-        //int size = servicesOffered.size()/4;
+
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
         Log.d("test3","Size = "+servicesOffered.size());
-        String serviceDetails="";
-        for(int i=0;i<servicesOffered.size();i+=4)
-        {
-            serviceDetails+=servicesOffered.get(i)+"\n"+servicesOffered.get(i+1)+"\n"+servicesOffered.get(i+2)+"\n"+servicesOffered.get(i+3)+"\n\n\n";
+        StringBuilder serviceDetails= new StringBuilder("Services Done\n");
+        for(int i=0;i<servicesOffered.size();i+=4) {
+            serviceDetails.append(servicesOffered.get(i)).append("\n").append(servicesOffered.get(i + 1)).append("\n").append(servicesOffered.get(i + 2)).append("\n").append(servicesOffered.get(i + 3)).append("\n\n\n");
         }
-        Log.d("test3",serviceDetails);
+        Log.d("test3", serviceDetails.toString());
         details = new TextView(context);
-        details.setText(serviceDetails);
+        details.setMovementMethod(new ScrollingMovementMethod());
+        details.setText(serviceDetails.toString());
         details.setTextSize(getResources().getDimension(R.dimen.servicesOffered_TextSize));
         details.setLayoutParams(params);
         linearLayout.addView(details);
