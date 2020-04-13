@@ -14,7 +14,7 @@
             android:title="Sign In" />
         <item
             android:id="@+id/nav_signUp"
-            android:icon="@drawable/ic_person"
+            android:icon="@drawable/register"
             android:title="Sign Up" />
         <item
             android:id="@+id/nav_logout"
@@ -28,7 +28,7 @@
         <item
             android:id="@+id/nav_setting"
             android:icon="@drawable/ic_settings"
-            android:title="Setting" />
+            android:title="Settings" />
     </group>
     <item android:title="Communicate">
         <menu>

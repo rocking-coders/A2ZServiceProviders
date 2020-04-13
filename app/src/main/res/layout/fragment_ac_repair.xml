@@ -87,7 +87,7 @@
         android:text="Submit"
         android:textColor="#ffffff"
         android:textStyle="bold"
-        android:background="@color/colorDark"
+        android:background="@color/colorPrimaryDark"
         android:paddingHorizontal="20dp"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

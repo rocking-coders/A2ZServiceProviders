@@ -47,7 +47,13 @@ public class PlumberFragment extends Fragment {
         if(!username.equals("")){
             warning_message.setVisibility(View.INVISIBLE);
         }
+        else{if(username.equals("")) {
+            warning_message.setText("Please Sign In first");
+        }
         else{
+            warning_message.setText("No Internet");
+        }
+            submit_button.setBackgroundColor(getResources().getColor(R.color.colorDark));
             submit_button.setEnabled(false);
         }
 

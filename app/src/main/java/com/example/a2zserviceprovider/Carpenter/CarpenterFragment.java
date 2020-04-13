@@ -52,10 +52,15 @@ public class CarpenterFragment extends Fragment {
         if(!username.equals("")){
             warning_message.setVisibility(View.INVISIBLE);
         }
-        else{
+        else {
+            if (username.equals("")) {
+                warning_message.setText("Please Sign In first");
+            } else {
+                warning_message.setText("No Internet");
+            }
+            submit_button.setBackgroundColor(getResources().getColor(R.color.colorDark));
             submit_button.setEnabled(false);
         }
-
         root.findViewById(R.id.buttonGetCurrentLocation).setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
