@@ -44,9 +44,9 @@ public class ServicesFragment extends Fragment {
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
         Log.d("test3","Size = "+servicesOffered.size());
-        StringBuilder serviceDetails= new StringBuilder("Services Done\n");
+        StringBuilder serviceDetails= new StringBuilder("Services Done:-\n\n\n");
         for(int i=0;i<servicesOffered.size();i+=4) {
-            serviceDetails.append(servicesOffered.get(i)).append("\n").append(servicesOffered.get(i + 1)).append("\n").append(servicesOffered.get(i + 2)).append("\n").append(servicesOffered.get(i + 3)).append("\n\n\n");
+            serviceDetails.append("Technician: "+servicesOffered.get(i)).append("\nEmail: ").append(servicesOffered.get(i + 1)).append("\nLocation: ").append(servicesOffered.get(i + 2)).append("\nService: ").append(servicesOffered.get(i + 3)).append("\n\n");
         }
         Log.d("test3", serviceDetails.toString());
         details = new TextView(context);

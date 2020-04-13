@@ -52,13 +52,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             {
                 Intent intent_painter = new Intent(getContext(), PainterActivity.class);
                 startActivity(intent_painter);
+                break;
 
             }
             case R.id.carpenter:
             {
                 Intent intent_carpenter = new Intent(getContext(), CarpenterActivity.class);
                 startActivity(intent_carpenter);
-
+                break;
             }
         }
     }

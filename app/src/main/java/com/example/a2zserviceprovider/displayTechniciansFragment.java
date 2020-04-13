@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class displayTechniciansFragment extends Fragment implements View.OnClickListener {
     RadioGroup radioGroup;
-    RadioButton t1, t2, t3, t4;
+    RadioButton t1, t2, t3;
     Button Bsubmit;
     String technicianName, technicianEmail;
     String serviceType;
@@ -48,7 +48,6 @@ public class displayTechniciansFragment extends Fragment implements View.OnClick
         t1 = root.findViewById(R.id.technician1);
         t2 = root.findViewById(R.id.technician2);
         t3 = root.findViewById(R.id.technician3);
-        TextView textView = root.findViewById(R.id.tnoTechnician);
         Bsubmit = root.findViewById(R.id.buttonRequest);
         Bsubmit.setOnClickListener(this);
         Log.d("debug", String.valueOf(technicians.size()));
@@ -58,15 +57,17 @@ public class displayTechniciansFragment extends Fragment implements View.OnClick
             SharedPreferences.Editor editor = preferences.edit();
             editor.clear();
             editor.apply();
-
                 Bsubmit.setVisibility(View.INVISIBLE);
+                t1.setClickable(false);
+                t2.setClickable(false);
+                t3.setClickable(false);
                 t1.setVisibility(View.INVISIBLE);
                 t2.setVisibility(View.INVISIBLE);
                 t3.setVisibility(View.INVISIBLE);
-                textView.setText("Sorry! No technician found nearby");
+                TextView t= root.findViewById(R.id.textView2);
+                t.setText(getResources().getString(R.string.noTechnician));
             }
             else {
-                    textView.setVisibility(View.INVISIBLE);
                     if(technicians.size()==2)
                     {
                         t1.setText(technicians.get(0));
@@ -87,25 +88,23 @@ public class displayTechniciansFragment extends Fragment implements View.OnClick
                     }
         }
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.technician1:
-                        Log.d("test1", "Selected t1");
-                        technicianName = technicians.get(0);
-                        technicianEmail = technicians.get(1);
-                        break;
-                    case R.id.technician2:
-                        Log.d("test1", "Selected t2");
-                        technicianName = technicians.get(2);
-                        technicianEmail = technicians.get(3);
-                        break;
-                    case R.id.technician3:
-                        Log.d("test1", "Selected t3");
-                        technicianName = technicians.get(4);
-                        technicianEmail = technicians.get(5);
-                        break;
-                }
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.technician1:
+                    Log.d("test1", "Selected t1");
+                    technicianName = technicians.get(0);
+                    technicianEmail = technicians.get(1);
+                    break;
+                case R.id.technician2:
+                    Log.d("test1", "Selected t2");
+                    technicianName = technicians.get(2);
+                    technicianEmail = technicians.get(3);
+                    break;
+                case R.id.technician3:
+                    Log.d("test1", "Selected t3");
+                    technicianName = technicians.get(4);
+                    technicianEmail = technicians.get(5);
+                    break;
             }
         });
 

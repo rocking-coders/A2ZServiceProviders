@@ -5,28 +5,54 @@
     android:id="@+id/plumber_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient"
     tools:context=".Plumber.PlumberFragment">
-    <TextView
-        android:id="@+id/ac_repair1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Plumber"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.132"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.131" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="32dp">
+
+            <TextView
+                android:id="@+id/ac_repair1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Plumber"
+                android:textColor="#ffffff"
+                android:textSize="35sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.132"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.131" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="40dp"
+                android:src="@drawable/plumber_white"/>
+
+        </RelativeLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/ac_repair2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fill the following details"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:text="Describe your problem: "
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="19dp"
+        android:textColor="#ffffff"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.157"
@@ -34,15 +60,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.23" />
 
-
     <EditText
         android:id="@+id/problemText"
-        android:layout_width="203dp"
-        android:layout_height="160dp"
+        android:layout_width="280dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="50dp"
+        android:focusedByDefault="true"
+        android:background="@android:drawable/ic_menu_edit"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Specify Your Problem"
+        android:textColor="#ffffff"
+        android:hint="Specify here"
         android:inputType="textMultiLine"
+        android:textColorHint="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.451"
@@ -52,9 +82,14 @@
 
     <Button
         android:id="@+id/buttonGetCurrentLocation"
-        android:layout_width="143dp"
-        android:layout_height="45dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Submit"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:background="@color/colorPrimaryDark"
+        android:paddingHorizontal="20dp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,15 +98,17 @@
 
     <TextView
         android:id="@+id/submit_warning"
-        android:textColor="@color/darkRed"
-        android:layout_width="281dp"
-        android:layout_height="44dp"
+        android:textColor="@android:color/background_light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="Please Sign In first to make request"
+        android:textStyle="bold"
+        android:textSize="20sp"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.914" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

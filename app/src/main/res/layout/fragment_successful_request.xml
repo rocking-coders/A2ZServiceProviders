@@ -8,12 +8,6 @@
     tools:context=".successfulRequestFragment"
     android:background="@drawable/gradient">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="Background effect"
-        android:src="@drawable/mobile_call"/>
-
     <TextView
         android:id="@+id/TVsuccessfulRequest"
         android:layout_width="match_parent"
@@ -38,10 +32,17 @@
         android:layout_height="wrap_content"
         android:padding="20dp"
         tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/mobile_call"/>
+
         <ImageButton
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:src="@drawable/ic_home"
             android:id="@+id/home"

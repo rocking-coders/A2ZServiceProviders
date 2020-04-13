@@ -28,6 +28,8 @@ import androidx.fragment.app.Fragment;
 import com.example.a2zserviceprovider.R;
 import com.example.a2zserviceprovider.BackgroundWorkers.locationFind;
 
+import static com.example.a2zserviceprovider.R.color.colorAccent;
+
 public class AcRepairFragment extends Fragment {
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
     ProgressDialog progressDialog;
@@ -56,6 +58,8 @@ public class AcRepairFragment extends Fragment {
             else{
                 warning_message.setText("No Internet");
             }
+
+            submit_button.setBackgroundColor(getResources().getColor(R.color.colorDark));
             submit_button.setEnabled(false);
         }
 

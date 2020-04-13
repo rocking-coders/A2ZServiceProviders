@@ -126,7 +126,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //imgProfile.setVisibility(View.INVISIBLE);
             imgPlus.setVisibility(View.INVISIBLE);
             loadProfileDefault(R.drawable.ic_android_a2z_512x512);
-
             menu.findItem(R.id.nav_logout).setVisible(false);
             menu.findItem(R.id.nav_services).setVisible(false);
             textView1.setVisibility(View.INVISIBLE);
