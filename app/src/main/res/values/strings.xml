@@ -7,7 +7,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="textView_welcome">Welcome\nBack</string>
     <string name="textView_register">Register Here</string>
-    <string name="noTechnician">"Sorry!" + "\n\n No technician found nearby."</string>
+    <string name="noTechnician">Sorry! \n\n No technician found nearby.</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
 
